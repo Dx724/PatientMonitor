@@ -2,10 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Stream from './Stream.js';
 
-const RoomContainer = styled.div`
-  background-color: purple;
-`;
-
 
 class Room extends React.Component {
   constructor(props) {
@@ -20,12 +16,13 @@ class Room extends React.Component {
   }
 
   render() {
-    return <RoomContainer>
+    return <div class="roomDiv">
+      <h3 class="roomTitle">{this.props.identifier}</h3>
       {this.props.streams.map((stream) => (
         <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink}/>
       ))}
-      <input type="button" onClick={this.onRemoveClick} value="Remove"></input>
-    </RoomContainer>;
+      <br/><input type="button" onClick={this.onRemoveClick} value="Remove"></input>
+    </div>;
   }
 }
 

@@ -25,10 +25,7 @@ class PatientMonitor extends React.Component {
     <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
     <p>{confirmationMessage}</p>
     {this.state.roomObjs.map(room => (
-      <div>
-      <p> {room.identifier}: </p>
       <Room key={room.identifier} identifier={room.identifier} streams={room.streams} onRemoveClick={this.onRoomRemove}/>
-      </div>
     ))}
     </div>);
   }

@@ -33,6 +33,40 @@
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         }
       ]
+    },
+    {
+      "identifier": "room125",
+      "streams": [
+        {
+          "name": "Bob",
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+        },
+        {
+          "name": "Donald",
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+        },
+        {
+          "name": "Mack",
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+        }
+      ]
+    },
+    {
+      "identifier": "room126",
+      "streams": [
+        {
+          "name": "Bob",
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+        },
+        {
+          "name": "Donald",
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+        },
+        {
+          "name": "Mack",
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+        }
+      ]
     }
   ]
 }
