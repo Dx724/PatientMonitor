@@ -7,7 +7,12 @@ class Stream extends React.Component {
   }
 
   render() {
-    return <p>Stream</p>;
+    return <div>
+          <p>{this.props.name}</p>
+          <video autoPlay>
+            <source src={this.props.streamLink}></source>
+          </video>
+        </div>;
   }
 }
 

@@ -5,15 +5,15 @@
       "streams": [
         {
           "name": "FakeTalZussman",
-          "streamLink": "google.com"
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
           "name": "FakeDavidXu",
-          "streamLink": "google.com"
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
-          "name": "FakeTalZussman",
-          "streamLink": "google.com"
+          "name": "FakeTalZussman2",
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         }
       ]
     },
@@ -22,15 +22,15 @@
       "streams": [
         {
           "name": "Bob",
-          "streamLink": "google.com"
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
           "name": "Donald",
-          "streamLink": "google.com"
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
           "name": "Mack",
-          "streamLink": "google.com"
+          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         }
       ]
     }

@@ -5,6 +5,8 @@ import Room from "./Room.js";
 
 const DEFAULT_VALUE = "default";
 
+var confirmationMessage = "Welcome to Patient Monitoring System.";
+
 class PatientMonitor extends React.Component {
   constructor(props) {
     super(props);
@@ -14,13 +16,18 @@ class PatientMonitor extends React.Component {
       //streamData.rooms.map((room) => {<Room streams=room.streams roomNumber=room.identifier>})
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onRoomRemove = this.onRoomRemove.bind(this);
   }
 
   render() {
     return (<div>
     <RoomDropdown options={this.state.dropdownList} changeHandler={this.handleChange}/>
+    <p>{confirmationMessage}</p>
     {this.state.roomObjs.map(room => (
-      <Room key={room.identifier} identifier={room.identifier} streams={room.streams}/>
+      <div>
+      <p> {room.identifier}: </p>
+      <Room key={room.identifier} identifier={room.identifier} streams={room.streams} onRemoveClick={this.onRoomRemove}/>
+      </div>
     ))}
     </div>);
   }
@@ -30,7 +37,13 @@ class PatientMonitor extends React.Component {
     this.state.roomObjs.push(streamData.rooms[streamData.rooms.map(room => room.identifier).indexOf(value)]);
     this.state.dropdownList.splice(this.state.dropdownList.indexOf(value), 1);
     this.setState({forceUpdate: !this.state.forceUpdate});
-    
+  }
+
+  onRoomRemove(roomIdentifier) {
+    this.state.dropdownList.push(roomIdentifier);
+    this.state.roomObjs.splice(this.state.roomObjs.findIndex((room) => (room.identifier == roomIdentifier)), 1);
+    this.setState({forceUpdate: !this.state.forceUpdate});
+    confirmationMessage = roomIdentifier + " removed!";
   }
 }
 
@@ -46,18 +59,19 @@ class RoomDropdown extends React.Component {
     event.preventDefault();
     this.props.changeHandler(event.target.value);
     this.setState({value: event.target.value});
+    if(this.state.value != DEFAULT_VALUE) {
+      confirmationMessage = this.state.value + " added!";
+    }
   }
   
   render() {
-    let confirmation = this.state.value == DEFAULT_VALUE ? "" : <p>{this.state.value + " added!"}</p>;
-
     return <div><label htmlFor="roomSelector">Rooms: </label><select id="roomSelector" value={DEFAULT_VALUE} onChange={this.onChange}>
     <option value={DEFAULT_VALUE}>---</option>
       {this.props.options.map(option => (
         <option key={option} value={option}>{option}</option>
       ))}
     </select>
-    {confirmation}</div>;
+    </div>;
   }
 }
 
