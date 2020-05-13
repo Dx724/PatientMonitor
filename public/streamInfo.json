@@ -1,0 +1,38 @@
+{
+  "rooms": [
+    {
+      "identifier": "room123",
+      "streams": [
+        {
+          "name": "FakeTalZussman",
+          "streamLink": "google.com"
+        },
+        {
+          "name": "FakeDavidXu",
+          "streamLink": "google.com"
+        },
+        {
+          "name": "FakeTalZussman",
+          "streamLink": "google.com"
+        }
+      ]
+    },
+    {
+      "identifier": "room124",
+      "streams": [
+        {
+          "name": "Bob",
+          "streamLink": "google.com"
+        },
+        {
+          "name": "Donald",
+          "streamLink": "google.com"
+        },
+        {
+          "name": "Mack",
+          "streamLink": "google.com"
+        }
+      ]
+    }
+  ]
+}
