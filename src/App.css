@@ -8,6 +8,12 @@
   display: none;
 }
 
+.streamTitle {
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .streamDiv {
   background-color: lightsteelblue;
   display: inline-block;

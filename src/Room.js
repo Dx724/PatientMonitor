@@ -19,7 +19,8 @@ class Room extends React.Component {
     return <div class="roomDiv">
       <h3 class="roomTitle">{this.props.identifier}</h3>
       {this.props.streams.map((stream) => (
-        <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink}/>
+        <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink}
+        muteFunction={this.props.muteFunction}/>
       ))}
       <br/><input type="button" onClick={this.onRemoveClick} value="Remove"></input>
     </div>;

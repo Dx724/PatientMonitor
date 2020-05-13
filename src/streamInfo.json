@@ -38,15 +38,15 @@
       "identifier": "room125",
       "streams": [
         {
-          "name": "Bob",
+          "name": "Bob2",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
-          "name": "Donald",
+          "name": "Donald2",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
-          "name": "Mack",
+          "name": "Mack2",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         }
       ]
@@ -55,15 +55,15 @@
       "identifier": "room126",
       "streams": [
         {
-          "name": "Bob",
+          "name": "Bob3",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
-          "name": "Donald",
+          "name": "Donald3",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
-          "name": "Mack",
+          "name": "Mack3",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         }
       ]

@@ -8,6 +8,8 @@ const DEFAULT_VALUE = "default"; //Also in RoomDropdown.js
 
 var confirmationMessage = "Welcome to Patient Monitoring System.";
 
+var soloTimeout = null;
+
 class PatientMonitor extends React.Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ class PatientMonitor extends React.Component {
     <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
     <p>{confirmationMessage}</p>
     {this.state.roomObjs.map(room => (
-      <Room key={room.identifier} identifier={room.identifier} streams={room.streams} onRemoveClick={this.onRoomRemove}/>
+      <Room key={room.identifier} identifier={room.identifier} streams={room.streams} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
     ))}
     </div>);
   }
@@ -45,6 +47,18 @@ class PatientMonitor extends React.Component {
     this.state.roomObjs.splice(this.state.roomObjs.findIndex((room) => (room.identifier === roomIdentifier)), 1);
     this.setState({forceUpdate: !this.state.forceUpdate});
     confirmationMessage = roomIdentifier + " removed!";
+  }
+
+  muteTemp() {
+    for (let stream of document.getElementsByClassName("stream")) {
+      stream.muted = true;
+    }
+    clearTimeout(soloTimeout);
+    soloTimeout = setTimeout(() => {
+      for (let stream of document.getElementsByClassName("stream")) {
+        stream.muted = false;
+      }
+    }, 15*1000);
   }
 }
 
