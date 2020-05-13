@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import "./Stream.css";
 
 class Stream extends React.Component {
   constructor(props) {
