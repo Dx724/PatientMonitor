@@ -10,6 +10,8 @@ var confirmationMessage = "Welcome to Patient Monitoring System.";
 
 var soloTimeout = null;
 
+var roomAddCounter = new Map();
+
 class PatientMonitor extends React.Component {
   constructor(props) {
     super(props);
@@ -18,31 +20,34 @@ class PatientMonitor extends React.Component {
       forceUpdate: true
       //streamData.rooms.map((room) => {<Room streams=room.streams roomNumber=room.identifier>})
     };
+
+    for (var i = 0; i < this.state.dropdownList.length; i++) {
+      roomAddCounter.set(this.state.dropdownList[i], 10000);
+    }
+
     this.onRoomAdd = this.onRoomAdd.bind(this);
     this.onRoomRemove = this.onRoomRemove.bind(this);
   }
 
-  render() {
-    return (<div>
-    <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
-    <p>{confirmationMessage}</p>
-    {this.state.roomObjs.map(room => (
-      <Room key={room.identifier} identifier={room.identifier} streams={room.streams} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
-    ))}
-    </div>);
+  incrementRoomAddCounter(roomIdentifier) {
+    roomAddCounter.set(roomIdentifier, roomAddCounter.get(roomIdentifier) + 1);
   }
 
-  onRoomAdd(value) {
-    console.log(value);
-    this.state.roomObjs.push(streamData.rooms[streamData.rooms.map(room => room.identifier).indexOf(value)]);
-    this.state.dropdownList.splice(this.state.dropdownList.indexOf(value), 1);
+  onRoomAdd(roomIdentifier) {
+    console.log(roomIdentifier + " added");
+    this.incrementRoomAddCounter(roomIdentifier);
+
+    this.state.roomObjs.push(streamData.rooms[streamData.rooms.map(room => room.identifier).indexOf(roomIdentifier)]);
+    this.state.dropdownList.splice(this.state.dropdownList.indexOf(roomIdentifier), 1);
     this.setState({forceUpdate: !this.state.forceUpdate});
-    if(value !== DEFAULT_VALUE) {
-      confirmationMessage = value + " added!";
+
+    if(roomIdentifier !== DEFAULT_VALUE) {
+      confirmationMessage = roomIdentifier + " added!";
     }
   }
 
   onRoomRemove(roomIdentifier) {
+    console.log(roomIdentifier + " removed");
     this.state.dropdownList.push(roomIdentifier);
     this.state.roomObjs.splice(this.state.roomObjs.findIndex((room) => (room.identifier === roomIdentifier)), 1);
     this.setState({forceUpdate: !this.state.forceUpdate});
@@ -59,6 +64,16 @@ class PatientMonitor extends React.Component {
         stream.muted = false;
       }
     }, 15*1000);
+  }
+
+  render() {
+    return (<div>
+    <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
+    <p>{confirmationMessage}</p>
+    {this.state.roomObjs.map(room => (
+      <Room key={room.identifier} identifier={room.identifier} streams={room.streams} addCounter={roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
+    ))}
+    </div>);
   }
 }
 
