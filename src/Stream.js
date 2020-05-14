@@ -14,12 +14,10 @@ const SoloButton = styled.input`
 	padding:7px 7px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #2b665e;
-&:hover {
-
-}
 &:active {
 	position:relative;
 	top:1px;
+  background-color: red;
 }
 `;
 
