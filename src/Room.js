@@ -3,6 +3,14 @@ import styled from 'styled-components';
 import Stream from './Stream.js';
 
 
+const RoomDiv = styled.div`
+  display: inline-block;
+  background-color: aliceblue;
+  width: 46vw;
+  margin: 5px;
+  padding: 1vw;
+`;
+
 class Room extends React.Component {
   constructor(props) {
     super(props);
@@ -42,14 +50,14 @@ class Room extends React.Component {
 
   render() {
     console.log("render");
-    return <div class="roomDiv">
+    return <RoomDiv>
       <h3 class="roomTitle">{this.props.identifier}</h3>
       {this.props.streams.map((stream) => (
         <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink/*this.streamProxy(stream)*/} /*Uncomment left for proxy*/
         muteFunction={this.props.muteFunction}/>
       ))}
       <br/><input type="button" onClick={this.onRemoveClick} value="Remove"></input>
-    </div>;
+    </RoomDiv>;
   }
 }
 

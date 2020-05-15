@@ -67,12 +67,13 @@ class PatientMonitor extends React.Component {
   }
 
   render() {
-    return (<div>
-    <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
-    <p>{confirmationMessage}</p>
-    {this.state.roomObjs.map(room => (
-      <Room key={room.identifier} identifier={room.identifier} streams={room.streams} addCounter={roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
-    ))}
+    return (
+    <div>
+      <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
+      <p>{confirmationMessage}</p>
+      {this.state.roomObjs.map(room => (
+        <Room key={room.identifier} identifier={room.identifier} streams={room.streams} addCounter={roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
+      ))}
     </div>);
   }
 }

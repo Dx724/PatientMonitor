@@ -1,8 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import AudioSpectrum from "react-audio-spectrum";
+//import AudioSpectrum from "react-audio-spectrum";
 import Spectrogram from '../node_modules/spectrogram';
 import chroma from "chroma-js";
+
+
+const StreamDiv = styled.div`
+  background-color: lightsteelblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
+  border: 3px solid white;
+  width: calc(100% - 30px);
+`;
 
 const SoloButton = styled.input`
 	background-color:#768d87;
@@ -234,7 +246,7 @@ gap={0}
 
   render() {
     console.log("stream rendered");
-    return <div class="streamDiv">
+    return <StreamDiv>
           <SoloButton type="button" value="Solo" onClick={this.onSoloClick}/>
           <StreamTitle>{this.props.name} 🔊</StreamTitle>
           <canvas id={"audio_canvas_" + this.props.name}> </canvas>
@@ -251,7 +263,7 @@ gap={0}
             <ToggleLabel htmlFor={"checkbox_" + this.props.name} />
           </ToggleDiv>
 
-        </div>;
+        </StreamDiv>;
   }
 }
 
