@@ -32,21 +32,26 @@ class Stream extends React.Component {
     this.audioCtx = new AudioContext();
     this.audioCtx2 = new AudioContext();
 
+    var fStart = 750;
+    var fEnd = 2800;
+    var fCenter = (750 + 2800) / 2;
+    var qFactor = fCenter / (fEnd - fStart);
+
     this.bandpassFilter = this.audioCtx.createBiquadFilter();
     this.bandpassFilter.type = "bandpass";
     this.bandpassFilter.frequency.value = 1775;
-    this.bandpassFilter.Q.value = 1025;
+    this.bandpassFilter.Q.value = qFactor;
 
     this.bandpassFilter2 = this.audioCtx2.createBiquadFilter();
     this.bandpassFilter2.type = "bandpass";
     this.bandpassFilter2.frequency.value = 1775;
-    this.bandpassFilter2.Q.value = 1025;
+    this.bandpassFilter2.Q.value = qFactor;
 
     this.gainNode = this.audioCtx.createGain();
-    this.gainNode.gain.value = 10;
+    this.gainNode.gain.value = 1;
 
     this.gainNode2 = this.audioCtx2.createGain();
-    this.gainNode2.gain.value = 2.5;
+    this.gainNode2.gain.value = 1;
 
     this.onSoloClick = this.onSoloClick.bind(this);
     this.onToggleChange = this.onToggleChange.bind(this);
