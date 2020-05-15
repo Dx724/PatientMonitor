@@ -34,17 +34,17 @@ class Stream extends React.Component {
 
     var fStart = 750;
     var fEnd = 2800;
-    var fCenter = (750 + 2800) / 2;
+    var fCenter = (fStart + fEnd) / 2;
     var qFactor = fCenter / (fEnd - fStart);
 
     this.bandpassFilter = this.audioCtx.createBiquadFilter();
     this.bandpassFilter.type = "bandpass";
-    this.bandpassFilter.frequency.value = 1775;
+    this.bandpassFilter.frequency.value = fCenter;
     this.bandpassFilter.Q.value = qFactor;
 
     this.bandpassFilter2 = this.audioCtx2.createBiquadFilter();
     this.bandpassFilter2.type = "bandpass";
-    this.bandpassFilter2.frequency.value = 1775;
+    this.bandpassFilter2.frequency.value = fCenter;
     this.bandpassFilter2.Q.value = qFactor;
 
     this.gainNode = this.audioCtx.createGain();
@@ -144,7 +144,7 @@ class Stream extends React.Component {
       this.audioStream2.disconnect(this.gainNode2);
       this.audioStream2.connect(this.bandpassFilter2);
       this.bandpassFilter2.connect(this.gainNode2);
-      this.gainNode.gain.value = 10;
+      //this.gainNode.gain.value = 10;
       
     }
     else {
@@ -157,7 +157,7 @@ class Stream extends React.Component {
 
       this.audioStream.connect(this.gainNode);
       this.audioStream2.connect(this.gainNode2);
-      this.gainNode.gain.value = 2.5;
+      //this.gainNode.gain.value = 2.5;
     }
   }
 
