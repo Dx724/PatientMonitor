@@ -6,6 +6,10 @@ import RoomDropdown from "./RoomDropdown.js";
 
 const DEFAULT_VALUE = "default"; //Also in RoomDropdown.js
 
+const ContainerDiv = styled.div`
+  text-align: center;
+`;
+
 var confirmationMessage = "Welcome to Patient Monitoring System.";
 
 var soloTimeout = null;
@@ -18,7 +22,6 @@ class PatientMonitor extends React.Component {
     this.state = {dropdownList: streamData.rooms.map((room) => room.identifier),  
       roomObjs: [],
       forceUpdate: true
-      //streamData.rooms.map((room) => {<Room streams=room.streams roomNumber=room.identifier>})
     };
 
     for (var i = 0; i < this.state.dropdownList.length; i++) {
@@ -68,13 +71,13 @@ class PatientMonitor extends React.Component {
 
   render() {
     return (
-    <div>
+    <ContainerDiv>
       <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
       <p>{confirmationMessage}</p>
       {this.state.roomObjs.map(room => (
         <Room key={room.identifier} identifier={room.identifier} streams={room.streams} addCounter={roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
       ))}
-    </div>);
+    </ContainerDiv>);
   }
 }
 

@@ -41,9 +41,9 @@ const StreamTitle = styled.p`
   margin-right: 10px;
 `;
 
-const AudioStream = styled.audio`
+/*const AudioStream = styled.audio`
   display: none;
-`;
+`;*/
 
 const ToggleDiv = styled.div`
   position: relative;
@@ -250,10 +250,10 @@ gap={0}
           <SoloButton type="button" value="Solo" onClick={this.onSoloClick}/>
           <StreamTitle>{this.props.name} 🔊</StreamTitle>
           <canvas id={"audio_canvas_" + this.props.name}> </canvas>
-          <audio crossOrigin="anonymous" class="stream" id={"audio_" + this.props.name} autoPlay>
+          <audio style={{display: 'none'}} crossOrigin="anonymous" class="stream" id={"audio_" + this.props.name} autoPlay>
             <source src={this.props.streamLink}></source>
           </audio>
-          <audio crossOrigin="anonymous" class="fakestream" id={"audio2_" + this.props.name} autoPlay>
+          <audio style={{display: 'none'}} crossOrigin="anonymous" class="fakestream" id={"audio2_" + this.props.name} autoPlay>
             <source src={this.props.streamLink}></source>
           </audio>
 
