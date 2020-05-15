@@ -23,6 +23,62 @@ const SoloButton = styled.input`
 }
 `;
 
+const StreamTitle = styled.p`
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+
+const AudioStream = styled.audio`
+  display: none;
+`;
+
+const ToggleDiv = styled.div`
+  position: relative;
+`;
+
+const ToggleLabel = styled.label`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 42px;
+  height: 26px;
+  border-radius: 15px;
+  background: #bebebe;
+  cursor: pointer;
+  &::after {
+    content: "";
+    display: block;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    margin: 3px;
+    background: #ffffff;
+    box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.2);
+    transition: 0.2s;
+  }
+`;
+
+const Toggle = styled.input`
+  opacity: 0;
+  z-index: 1;
+  border-radius: 15px;
+  width: 42px;
+  height: 26px;
+  &:checked + ${ToggleLabel} {
+    background: #4fbe79;
+    &::after {
+      content: "";
+      display: block;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      margin-left: 21px;
+      transition: 0.2s;
+    }
+  }
+`;
+
 class Stream extends React.Component {
   constructor(props) {
     super(props);
@@ -144,11 +200,8 @@ class Stream extends React.Component {
       this.audioStream2.disconnect(this.gainNode2);
       this.audioStream2.connect(this.bandpassFilter2);
       this.bandpassFilter2.connect(this.gainNode2);
-      //this.gainNode.gain.value = 10;
-      
     }
     else {
-
       this.bandpassFilter.disconnect(this.gainNode);
       this.bandpassFilter2.disconnect(this.gainNode2);
 
@@ -157,7 +210,6 @@ class Stream extends React.Component {
 
       this.audioStream.connect(this.gainNode);
       this.audioStream2.connect(this.gainNode2);
-      //this.gainNode.gain.value = 2.5;
     }
   }
 
@@ -184,7 +236,7 @@ gap={0}
     console.log("stream rendered");
     return <div class="streamDiv">
           <SoloButton type="button" value="Solo" onClick={this.onSoloClick}/>
-          <p class="streamTitle">{this.props.name} 🔊</p>
+          <StreamTitle>{this.props.name} 🔊</StreamTitle>
           <canvas id={"audio_canvas_" + this.props.name}> </canvas>
           <audio crossOrigin="anonymous" class="stream" id={"audio_" + this.props.name} autoPlay>
             <source src={this.props.streamLink}></source>
@@ -192,12 +244,12 @@ gap={0}
           <audio crossOrigin="anonymous" class="fakestream" id={"audio2_" + this.props.name} autoPlay>
             <source src={this.props.streamLink}></source>
           </audio>
-          <label class="switch">
-            <input type="checkbox" onChange={this.onToggleChange} defaultChecked={true}
-            value={this.state.toggleValue}/>
-            <span class="slider round"></span>
-          </label>
-          
+
+          <ToggleDiv>
+            <Toggle id={"checkbox_" + this.props.name} type="checkbox" onChange={this.onToggleChange} 
+            defaultChecked={true} value={this.state.toggleValue}/>
+            <ToggleLabel htmlFor={"checkbox_" + this.props.name} />
+          </ToggleDiv>
 
         </div>;
   }

@@ -6,12 +6,6 @@
   display: none;
 }
 
-.streamTitle {
-  display: inline-block;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
 .streamDiv {
   background-color: lightsteelblue;
   display: flex;
@@ -31,22 +25,19 @@
   padding: 1vw;
 }
 
-/* The switch - the box around the slider */
-.switch {
+/*.switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
 
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -85,11 +76,10 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
-}
+  border-radius: 34px;
+}*/
