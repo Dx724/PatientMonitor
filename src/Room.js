@@ -8,11 +8,17 @@ class Room extends React.Component {
     super(props);
     this.onRemoveClick = this.onRemoveClick.bind(this);
     this.streamProxy = this.streamProxy.bind(this);
-
+    this.componentWillUnmount = this.componentWillUnmount(this);
   } // JSON array passed into props as props.streams, room name passed as props.identifier
 
   onRemoveClick(event) {
     event.preventDefault();
+    var mediaElement;
+    for (let i=0; i < this.props.streams.length; i++) {
+      mediaElement = document.getElementById("audio_" + this.props.streams[i].name);
+      mediaElement.removeAttribute("src");
+      mediaElement.load();
+    }
     this.props.onRemoveClick(this.props.identifier);
   }
 
@@ -20,7 +26,18 @@ class Room extends React.Component {
     return stream.streamLink + "_" + this.props.addCounter;
   }
 
+  componentDidMount () {
+    console.log("mounted");
+  }
+
+  componentWillUnmount(){
+    console.log("unmounted");
+    
+
+  }
+
   render() {
+    console.log("render");
     return <div class="roomDiv">
       <h3 class="roomTitle">{this.props.identifier}</h3>
       {this.props.streams.map((stream) => (

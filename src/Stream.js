@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import AudioSpectrum from "react-audio-spectrum";
+import Audio from './Audio.js';
 
 const SoloButton = styled.input`
 	background-color:#768d87;
@@ -21,10 +22,33 @@ const SoloButton = styled.input`
 }
 `;
 
+var mediaElement;
+
 class Stream extends React.Component {
   constructor(props) {
     super(props);
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.audioCtx = new AudioContext();
+
     this.onSoloClick = this.onSoloClick.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount(this);
+  }
+
+  componentDidMount() {
+    // Initialize an audio context
+    const audioElement = document.getElementById("audio_" + this.props.name);
+    const audioStream = this.audioCtx.createMediaElementSource(audioElement);
+    audioStream.connect(this.audioCtx.destination);
+    if (this.audioCtx.state === 'suspended') {
+		  this.audioCtx.resume();
+	  }
+    console.log("stream mounted");
+  }
+
+  componentWillUnmount() {
+    //this.audioCtx.close();
+    console.log("stream unmounted");
   }
 
   onSoloClick(event) {
@@ -34,28 +58,14 @@ class Stream extends React.Component {
   }
 
   render() {
+    console.log("stream rendered");
     return <div class="streamDiv">
           <SoloButton type="button" value="Solo" onClick={this.onSoloClick}/>
           <p class="streamTitle">{this.props.name} 🔊</p>
           <audio crossOrigin="anonymous" class="stream" id={"audio_" + this.props.name} autoPlay>
             <source src={this.props.streamLink}></source>
           </audio>
-          <AudioSpectrum
-            id={"audio-canvas_" + this.props.name}
-            height={35}
-            width={250}
-            audioId={"audio_" + this.props.name}
-            capColor={'white'}
-            capHeight={2}
-            meterWidth={1}
-            meterCount={256}
-            meterColor={[
-              {stop: 0, color: 'red'},
-              {stop: 0.5, color: '#0CD7FD'},
-              {stop: 1, color: 'red'}
-            ]}
-            gap={0}
-          />
+
         </div>;
   }
 }
