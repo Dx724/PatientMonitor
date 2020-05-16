@@ -27,10 +27,6 @@ class Room extends React.Component {
       mediaElement = document.getElementById("audio_" + this.props.streams[i].name);
       mediaElement.removeAttribute("src");
       mediaElement.load();
-
-      mediaElement = document.getElementById("audio2_" + this.props.streams[i].name);
-      mediaElement.removeAttribute("src");
-      mediaElement.load();
     }
     this.props.onRemoveClick(this.props.identifier);
   }

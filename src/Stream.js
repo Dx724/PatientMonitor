@@ -61,7 +61,6 @@ class Stream extends React.Component {
 
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
-    this.audioCtx2 = new AudioContext();
 
     var fStart = 750;
     var fEnd = 2800;
@@ -73,16 +72,8 @@ class Stream extends React.Component {
     this.bandpassFilter.frequency.value = fCenter;
     this.bandpassFilter.Q.value = qFactor;
 
-    this.bandpassFilter2 = this.audioCtx2.createBiquadFilter();
-    this.bandpassFilter2.type = "bandpass";
-    this.bandpassFilter2.frequency.value = fCenter;
-    this.bandpassFilter2.Q.value = qFactor;
-
     this.gainNode = this.audioCtx.createGain();
     this.gainNode.gain.value = 1;
-
-    this.gainNode2 = this.audioCtx2.createGain();
-    this.gainNode2.gain.value = 1;
 
     this.onSoloClick = this.onSoloClick.bind(this);
     this.onToggleChange = this.onToggleChange.bind(this);
@@ -94,7 +85,6 @@ class Stream extends React.Component {
   componentDidMount() {
     // Initialize an audio context
     const audioElement = document.getElementById("audio_" + this.props.name);
-    const audioElement2 = document.getElementById("audio2_" + this.props.name);
 
     audioElement.addEventListener('volumechange', () => {
       console.log("Audio event");
@@ -111,8 +101,7 @@ class Stream extends React.Component {
       
     }, false);
 
-    this.audioStream = this.audioCtx.createMediaElementSource(audioElement2);
-    this.audioStream2 = this.audioCtx2.createMediaElementSource(audioElement);
+    this.audioStream = this.audioCtx.createMediaElementSource(audioElement);
  
     var spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
       canvas: {
@@ -140,20 +129,16 @@ class Stream extends React.Component {
       }});
 
 
-    var analyser = this.audioCtx2.createAnalyser();
+    var analyser = this.audioCtx.createAnalyser();
     analyser.smoothingTimeConstant = 0;
     analyser.fftSize = 2048;
 
     this.audioStream.connect(this.bandpassFilter);
     this.bandpassFilter.connect(this.gainNode);
-    //this.gainNode.connect(this.audioCtx.destination);
-
-    this.audioStream2.connect(this.bandpassFilter2);
-    this.bandpassFilter2.connect(this.gainNode2);
-    this.gainNode2.connect(analyser);
-    analyser.connect(this.audioCtx2.destination);
+    this.gainNode.connect(analyser);
+    analyser.connect(this.audioCtx.destination);
     
-    spectro.connectSource(analyser, this.audioCtx2);
+    spectro.connectSource(analyser, this.audioCtx);
     spectro.start();
 
     if (this.audioCtx.state === 'suspended') {
@@ -201,20 +186,11 @@ class Stream extends React.Component {
       this.audioStream.disconnect(this.gainNode);
       this.audioStream.connect(this.bandpassFilter);
       this.bandpassFilter.connect(this.gainNode);
-
-      this.audioStream2.disconnect(this.gainNode2);
-      this.audioStream2.connect(this.bandpassFilter2);
-      this.bandpassFilter2.connect(this.gainNode2);
     }
     else {
       this.bandpassFilter.disconnect(this.gainNode);
-      this.bandpassFilter2.disconnect(this.gainNode2);
-
       this.audioStream.disconnect(this.bandpassFilter);
-      this.audioStream2.disconnect(this.bandpassFilter2);
-
       this.audioStream.connect(this.gainNode);
-      this.audioStream2.connect(this.gainNode2);
     }
   }
 
@@ -261,9 +237,6 @@ gap={0}
           <StreamTitle>{this.props.name} 🔊</StreamTitle>
           <canvas id={"audio_canvas_" + this.props.name} style={{borderRadius: '4px'}}> </canvas>
           <audio style={{display: 'none'}} crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} autoPlay>
-            <source src={this.props.streamLink}></source>
-          </audio>
-          <audio style={{display: 'none'}} crossOrigin="anonymous" className="fakestream" id={"audio2_" + this.props.name} autoPlay>
             <source src={this.props.streamLink}></source>
           </audio>
 
