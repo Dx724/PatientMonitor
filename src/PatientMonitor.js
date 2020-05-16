@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import streamData from "./streamInfo.json";
 import Room from "./Room.js";
 import RoomDropdown from "./RoomDropdown.js";
@@ -10,6 +12,10 @@ const ContainerDiv = styled.div`
   text-align: center;
 `;
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 var confirmationMessage = "Welcome to Patient Monitoring System.";
 
 var soloTimeout = null;
@@ -19,9 +25,10 @@ class PatientMonitor extends React.Component {
     super(props);
     this.state = {dropdownList: streamData.rooms.map((room) => room.identifier),  
       roomObjs: [],
-      forceUpdate: true
+      forceUpdate: true,
+      open: false,
+      lastRemoved: null
     };
-
 
     this.roomAddCounter = new Map();
 
@@ -31,6 +38,7 @@ class PatientMonitor extends React.Component {
 
     this.onRoomAdd = this.onRoomAdd.bind(this);
     this.onRoomRemove = this.onRoomRemove.bind(this);
+    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
   }
 
   incrementRoomAddCounter(roomIdentifier) {
@@ -54,7 +62,9 @@ class PatientMonitor extends React.Component {
     console.log(roomIdentifier + " removed");
     this.state.dropdownList.push(roomIdentifier);
     this.state.roomObjs.splice(this.state.roomObjs.findIndex((room) => (room.identifier === roomIdentifier)), 1);
-    this.setState({forceUpdate: !this.state.forceUpdate});
+    this.setState({forceUpdate: !this.state.forceUpdate,
+                  open: true,
+                  lastRemoved: roomIdentifier});
     confirmationMessage = roomIdentifier + " removed!";
   }
 
@@ -74,6 +84,10 @@ class PatientMonitor extends React.Component {
     }
   }
 
+  handleSnackbarClose(event, reason){
+    this.setState({open: false});
+  };
+
   render() {
     return (
     <ContainerDiv>
@@ -82,6 +96,22 @@ class PatientMonitor extends React.Component {
       {this.state.roomObjs.map(room => (
         <Room key={room.identifier} identifier={room.identifier} streams={room.streams} addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
       ))}
+      <Snackbar 
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }} 
+        open={this.state.open} autoHideDuration={6000} onClose={this.handleSnackbarClose}
+        /*message={"Successfully added " + this.state.value +"!"} 
+        action={
+            <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleSnackbarClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+        }*/>
+        <Alert onClose={this.handleSnackbarClose} severity="success">
+          Removed {this.state.lastRemoved}!
+        </Alert>
+        </Snackbar>
     </ContainerDiv>);
   }
 }
