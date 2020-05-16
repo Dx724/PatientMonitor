@@ -2,6 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 //import AudioSpectrum from "react-audio-spectrum";
 import Spectrogram from '../node_modules/spectrogram';
+import Switch from '@material-ui/core/Switch';
+import IconButton from '@material-ui/core/IconButton';
+import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
+import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
+import { withStyles } from '@material-ui/core/styles';
 import TimerButton from './TimerButton.js'
 import chroma from "chroma-js";
 
@@ -31,7 +36,6 @@ const SoloButton = styled.input`
   &:active {
 	  position:relative;
 	  top:1px;
-    background-color: red;
   }
 `;
 
@@ -49,57 +53,28 @@ const ToggleDiv = styled.div`
   position: relative;
 `;
 
-const ToggleLabel = styled.label`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 42px;
-  height: 26px;
-  border-radius: 15px;
-  background: #bebebe;
-  cursor: pointer;
-  &::after {
-    content: "";
-    display: block;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    margin: 3px;
-    background: #ffffff;
-    box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.2);
-    transition: 0.2s;
-  }
-`;
-
-const Toggle = styled.input`
-  opacity: 0;
-  z-index: 1;
-  border-radius: 15px;
-  width: 42px;
-  height: 26px;
-  &:checked + ${ToggleLabel} {
-    background: #4fbe79;
-    &::after {
-      content: "";
-      display: block;
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      margin-left: 21px;
-      transition: 0.2s;
-    }
-  }
-`;
+const BlueSwitch = withStyles({
+  switchBase: {
+    color: '#fafafa',
+    '&$checked': {
+      color: '#1976d2',
+    },
+    '&$checked + $track': {
+      backgroundColor: '#1976d2',
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 
 var soloTimeout = null;
-var timer = null;
-var timerTimeout = null;
 
 class Stream extends React.Component {
   constructor(props) {
     super(props);
     this.state = {toggleValue: true,
-                  solo: false};
+                  solo: false,
+                  muted: false};
 
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
@@ -139,9 +114,14 @@ class Stream extends React.Component {
     const audioElement2 = document.getElementById("audio2_" + this.props.name);
 
     audioElement.addEventListener('volumechange', () => {
-      if (this.state.solo && audioElement.muted) {
-        this.setState({solo: false});
+      if (audioElement.muted) {
+        console.log(this.props.name + " audio event");
+        if (this.state.solo) {
+          this.setState({solo: false});
+        }
+        this.setState({muted: true});
       }
+      this.setState({muted: false});
     }, false);
 
     this.audioStream = this.audioCtx.createMediaElementSource(audioElement);
@@ -205,8 +185,7 @@ class Stream extends React.Component {
     if (!this.state.solo) {
       this.props.muteFunction(true);
       document.getElementById("audio_" + this.props.name).muted = false;
-      this.setState({solo: true});
-      
+      this.setState({solo: true, muted: false});
       var self = this;
       
       clearTimeout(soloTimeout);
@@ -216,7 +195,7 @@ class Stream extends React.Component {
     }
     else {
       clearTimeout(soloTimeout);
-      this.setState({solo: false});
+      this.setState({solo: false, muted: false});
       this.props.muteFunction(false);
     }
   }
@@ -273,13 +252,21 @@ gap={0}
   render() {
     console.log(this.props.name + "stream rendered");
     let soloButton;
-    let color = this.state.solo ? "green" : "red";
+    let icon;
 
     if(this.state.solo) {
       soloButton = <TimerButton onClick={this.onSoloClick}/>;
     }
     else {
-      soloButton = <SoloButton type="button" value="Solo" onClick={this.onSoloClick} solo={color}/>;
+      if (this.state.muted) {
+        icon = <VolumeOffRoundedIcon fontSize='large' style={{fill: "black"}}/>;
+      }
+      else {
+        icon = <VolumeUpRoundedIcon fontSize='large' style={{fill: "black"}}/>;
+      }
+      soloButton = <IconButton type="button" onClick={this.onSoloClick}>
+          {icon}
+        </IconButton>;
     }
 
     return <StreamDiv>
@@ -294,9 +281,8 @@ gap={0}
           </audio>
 
           <ToggleDiv>
-            <Toggle id={"checkbox_" + this.props.name} type="checkbox" onChange={this.onToggleChange} 
-            defaultChecked={true} value={this.state.toggleValue}/>
-            <ToggleLabel htmlFor={"checkbox_" + this.props.name} />
+            <BlueSwitch id={"checkbox_" + this.props.name} type="checkbox" onChange={this.onToggleChange} 
+            defaultChecked={true} value={this.state.toggleValue} style={{colorPrimary: '#1976d2'}} color="primary"/>
           </ToggleDiv>
 
         </StreamDiv>;
