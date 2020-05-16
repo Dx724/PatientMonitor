@@ -16,7 +16,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-var confirmationMessage = "Welcome to Patient Monitoring System.";
+const confirmationMessage = "Welcome to Patient Monitoring System.";
 
 var soloTimeout = null;
 
@@ -52,10 +52,6 @@ class PatientMonitor extends React.Component {
     this.state.roomObjs.push(streamData.rooms[streamData.rooms.map(room => room.identifier).indexOf(roomIdentifier)]);
     this.state.dropdownList.splice(this.state.dropdownList.indexOf(roomIdentifier), 1);
     this.setState({forceUpdate: !this.state.forceUpdate});
-
-    if(roomIdentifier !== DEFAULT_VALUE) {
-      confirmationMessage = roomIdentifier + " added!";
-    }
   }
 
   onRoomRemove(roomIdentifier) {
@@ -65,7 +61,6 @@ class PatientMonitor extends React.Component {
     this.setState({forceUpdate: !this.state.forceUpdate,
                   open: true,
                   lastRemoved: roomIdentifier});
-    confirmationMessage = roomIdentifier + " removed!";
   }
 
   muteTemp(mute) {
