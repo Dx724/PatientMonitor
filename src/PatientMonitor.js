@@ -14,8 +14,6 @@ var confirmationMessage = "Welcome to Patient Monitoring System.";
 
 var soloTimeout = null;
 
-var roomAddCounter = new Map();
-
 class PatientMonitor extends React.Component {
   constructor(props) {
     super(props);
@@ -24,8 +22,11 @@ class PatientMonitor extends React.Component {
       forceUpdate: true
     };
 
+
+    this.roomAddCounter = new Map();
+
     for (var i = 0; i < this.state.dropdownList.length; i++) {
-      roomAddCounter.set(this.state.dropdownList[i], 10000);
+      this.roomAddCounter.set(this.state.dropdownList[i], 10000);
     }
 
     this.onRoomAdd = this.onRoomAdd.bind(this);
@@ -33,7 +34,7 @@ class PatientMonitor extends React.Component {
   }
 
   incrementRoomAddCounter(roomIdentifier) {
-    roomAddCounter.set(roomIdentifier, roomAddCounter.get(roomIdentifier) + 1);
+    this.roomAddCounter.set(roomIdentifier, this.roomAddCounter.get(roomIdentifier) + 1);
   }
 
   onRoomAdd(roomIdentifier) {
@@ -57,16 +58,20 @@ class PatientMonitor extends React.Component {
     confirmationMessage = roomIdentifier + " removed!";
   }
 
-  muteTemp() {
+  muteTemp(mute) {
     for (let stream of document.getElementsByClassName("stream")) {
-      stream.muted = true;
+      stream.muted = mute;
     }
+
     clearTimeout(soloTimeout);
-    soloTimeout = setTimeout(() => {
-      for (let stream of document.getElementsByClassName("stream")) {
-        stream.muted = false;
-      }
-    }, 15*1000);
+
+    if (mute) {
+      soloTimeout = setTimeout(() => {
+        for (let stream of document.getElementsByClassName("stream")) {
+          stream.muted = false;
+        }
+      }, 15*1000);
+    }
   }
 
   render() {
@@ -75,7 +80,7 @@ class PatientMonitor extends React.Component {
       <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
       <p>{confirmationMessage}</p>
       {this.state.roomObjs.map(room => (
-        <Room key={room.identifier} identifier={room.identifier} streams={room.streams} addCounter={roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
+        <Room key={room.identifier} identifier={room.identifier} streams={room.streams} addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
       ))}
     </ContainerDiv>);
   }

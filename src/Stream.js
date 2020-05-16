@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import Spectrogram from '../node_modules/spectrogram';
 import chroma from "chroma-js";
 
-
 const StreamDiv = styled.div`
   background-color: lightsteelblue;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin: 5px;
   padding: 5px;
@@ -17,22 +16,22 @@ const StreamDiv = styled.div`
 `;
 
 const SoloButton = styled.input`
-	background-color:#768d87;
-	border-radius:42px;
-	border:1px solid #566963;
+	background-color: ${props => props.solo};
+	border-radius:100%;
+  border:1px solid #566963;
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
 	font-size:17px;
 	padding:7px 7px;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #2b665e;
-&:active {
-	position:relative;
-	top:1px;
-  background-color: red;
-}
+  text-shadow:0px 1px 0px #2b665e;
+  /*width: 7vh;
+  height: 7vh;*/
+  &:active {
+	  position:relative;
+	  top:1px;
+    background-color: red;
+  }
 `;
 
 const StreamTitle = styled.p`
@@ -91,10 +90,13 @@ const Toggle = styled.input`
   }
 `;
 
+var soloTimeout = null;
+
 class Stream extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {toggleValue: true};
+    this.state = {toggleValue: true,
+                  solo: false};
 
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
@@ -132,6 +134,13 @@ class Stream extends React.Component {
     // Initialize an audio context
     const audioElement = document.getElementById("audio_" + this.props.name);
     const audioElement2 = document.getElementById("audio2_" + this.props.name);
+
+    audioElement.addEventListener('volumechange', () => {
+      if (this.state.solo && audioElement.muted) {
+        clearTimeout(soloTimeout);
+        this.setState({solo: false});
+      }
+    }, false);
 
     this.audioStream = this.audioCtx.createMediaElementSource(audioElement);
     this.audioStream2 = this.audioCtx2.createMediaElementSource(audioElement2);
@@ -191,9 +200,23 @@ class Stream extends React.Component {
 
   onSoloClick(event) {
     event.preventDefault();
-    this.props.muteFunction();
-    document.getElementById("audio_" + this.props.name).muted = false;
-    document.getElementById("audio2_" + this.props.name).muted = false;
+
+    if (!this.state.solo) {
+      this.props.muteFunction(true);
+      document.getElementById("audio_" + this.props.name).muted = false;
+      this.setState({solo: true});
+      
+      var self = this;
+      clearTimeout(soloTimeout);
+      soloTimeout = setTimeout(() => {
+        self.setState({solo: false});
+      }, 15*1000);
+    }
+    else {
+      clearTimeout(soloTimeout);
+      this.setState({solo: false});
+      this.props.muteFunction(false);
+    }
   }
 
   onToggleChange(event) {
@@ -245,9 +268,10 @@ gap={0}
 
 
   render() {
-    console.log("stream rendered");
+    console.log("stream rendered" + this.state.solo);
+    let color = this.state.solo ? "red" : "green";
     return <StreamDiv>
-          <SoloButton type="button" value="Solo" onClick={this.onSoloClick}/>
+          <SoloButton type="button" value="Solo" onClick={this.onSoloClick} solo={color}/>
           <StreamTitle>{this.props.name} 🔊</StreamTitle>
           <canvas id={"audio_canvas_" + this.props.name}> </canvas>
           <audio style={{display: 'none'}} crossOrigin="anonymous" class="stream" id={"audio_" + this.props.name} autoPlay>
@@ -262,6 +286,7 @@ gap={0}
             defaultChecked={true} value={this.state.toggleValue}/>
             <ToggleLabel htmlFor={"checkbox_" + this.props.name} />
           </ToggleDiv>
+          <p>{color}</p>
 
         </StreamDiv>;
   }
