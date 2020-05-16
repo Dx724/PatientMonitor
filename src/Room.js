@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
 import Stream from './Stream.js';
 
 
@@ -56,9 +58,15 @@ class Room extends React.Component {
         <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink/*this.streamProxy(stream)*/} /*Uncomment left for proxy*/
         muteFunction={this.props.muteFunction}/>
       ))}
-      <br/><input type="button" onClick={this.onRemoveClick} value="Remove"></input>
+      <br/>
+      <Button variant="contained" color="primary" onClick={this.onRemoveClick} style={{background: '#1976d2'}}
+      startIcon={<CloseIcon fontSize="small" />}>
+        Remove
+      </Button>
     </RoomDiv>;
   }
 }
 
 export default Room;
+
+/*<input type="button" onClick={this.onRemoveClick} value="Remove"></input>*/
