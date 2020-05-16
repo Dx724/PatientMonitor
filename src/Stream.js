@@ -21,24 +21,6 @@ const StreamDiv = styled.div`
   width: calc(100% - 30px);
 `;
 
-const SoloButton = styled.input`
-	background-color: ${props => props.solo};
-	border-radius:100%;
-  border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	font-size:17px;
-	padding:7px 7px;
-	text-decoration:none;
-  text-shadow:0px 1px 0px #2b665e;
-  /*width: 7vh;
-  height: 7vh;*/
-  &:active {
-	  position:relative;
-	  top:1px;
-  }
-`;
-
 const StreamTitle = styled.p`
   display: inline-block;
   margin-left: 10px;

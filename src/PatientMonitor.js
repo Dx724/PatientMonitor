@@ -6,8 +6,6 @@ import streamData from "./streamInfo.json";
 import Room from "./Room.js";
 import RoomDropdown from "./RoomDropdown.js";
 
-const DEFAULT_VALUE = "default"; //Also in RoomDropdown.js
-
 const ContainerDiv = styled.div`
   text-align: center;
 `;

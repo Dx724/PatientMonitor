@@ -9,8 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 //import IconButton from '@material-ui/core/IconButton';
 //import CloseIcon from '@material-ui/icons/Close';
 
-const DEFAULT_VALUE = "default"; //Also in PatientMonitor.js
-
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -22,7 +20,7 @@ class RoomDropdown extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.state = {open: false,
-                      value: DEFAULT_VALUE,
+                      value: ''
         };
   }
 
@@ -44,7 +42,6 @@ class RoomDropdown extends React.Component {
       <FormControl style={{minWidth: 120}}>
       <InputLabel /*htmlFor="roomSelector"*/ id="select-label">Rooms </InputLabel>
       <Select id="roomSelector" labelId="select-label" value={''} onChange={this.onChange}>
-        
         {this.props.options.map(option => (
           <MenuItem key={option} value={option}>{option}</MenuItem>
         ))}
