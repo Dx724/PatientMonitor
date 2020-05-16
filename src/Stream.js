@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 //import AudioSpectrum from "react-audio-spectrum";
 import Spectrogram from '../node_modules/spectrogram';
+import TimerButton from './TimerButton.js'
 import chroma from "chroma-js";
 
 const StreamDiv = styled.div`
@@ -91,6 +92,8 @@ const Toggle = styled.input`
 `;
 
 var soloTimeout = null;
+var timer = null;
+var timerTimeout = null;
 
 class Stream extends React.Component {
   constructor(props) {
@@ -137,15 +140,13 @@ class Stream extends React.Component {
 
     audioElement.addEventListener('volumechange', () => {
       if (this.state.solo && audioElement.muted) {
-        clearTimeout(soloTimeout);
         this.setState({solo: false});
       }
     }, false);
 
     this.audioStream = this.audioCtx.createMediaElementSource(audioElement);
     this.audioStream2 = this.audioCtx2.createMediaElementSource(audioElement2);
-  
-    var spectrogram = require('spectrogram');
+ 
     var spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
       canvas: {
         width: 250,
@@ -207,6 +208,7 @@ class Stream extends React.Component {
       this.setState({solo: true});
       
       var self = this;
+      
       clearTimeout(soloTimeout);
       soloTimeout = setTimeout(() => {
         self.setState({solo: false});
@@ -225,6 +227,7 @@ class Stream extends React.Component {
     })
     this.toggleFilter(event.target.checked);
   }
+
 
   toggleFilter(filterOn) {
     if (filterOn) {
@@ -268,10 +271,19 @@ gap={0}
 
 
   render() {
-    console.log("stream rendered" + this.state.solo);
+    console.log(this.props.name + "stream rendered");
+    let soloButton;
     let color = this.state.solo ? "green" : "red";
+
+    if(this.state.solo) {
+      soloButton = <TimerButton onClick={this.onSoloClick}/>;
+    }
+    else {
+      soloButton = <SoloButton type="button" value="Solo" onClick={this.onSoloClick} solo={color}/>;
+    }
+
     return <StreamDiv>
-          <SoloButton type="button" value="Solo" onClick={this.onSoloClick} solo={color}/>
+          {soloButton}
           <StreamTitle>{this.props.name} 🔊</StreamTitle>
           <canvas id={"audio_canvas_" + this.props.name}> </canvas>
           <audio style={{display: 'none'}} crossOrigin="anonymous" class="stream" id={"audio_" + this.props.name} autoPlay>
