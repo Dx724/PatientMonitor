@@ -4,16 +4,16 @@
       "identifier": "room123",
       "streams": [
         {
-          "name": "FakeTalZussman",
+          "name": "RaspberryPi",
+          "streamLink": "http://192.168.2.65:8000/livemic"
+        },
+        {
+          "name": "Alarm1",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
-          "name": "FakeDavidXu",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
-        },
-        {
-          "name": "FakeTalZussman2",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Livemic1",
+          "streamLink": "https://alarmtest.ceec.echem.io/livemic"
         }
       ]
     },
@@ -21,16 +21,16 @@
       "identifier": "room124",
       "streams": [
         {
-          "name": "Bob",
+          "name": "Alarm",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
-          "name": "Donald",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Livemic",
+          "streamLink": "https://alarmtest.ceec.echem.io/livemic"
         },
         {
-          "name": "Mack",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Test_1",
+          "streamLink": "https://alarmtest.ceec.echem.io/test_1"
         }
       ]
     },
@@ -38,16 +38,16 @@
       "identifier": "room125",
       "streams": [
         {
-          "name": "Bob2",
+          "name": "Alarm2",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
-          "name": "Donald2",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Livemic2",
+          "streamLink": "https://alarmtest.ceec.echem.io/livemic"
         },
         {
-          "name": "Mack2",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Test12",
+          "streamLink": "https://alarmtest.ceec.echem.io/test_1"
         }
       ]
     },
@@ -55,16 +55,16 @@
       "identifier": "room126",
       "streams": [
         {
-          "name": "Bob3",
+          "name": "ALarm3",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
-          "name": "Donald3",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Livemic3",
+          "streamLink": "https://alarmtest.ceec.echem.io/livemic"
         },
         {
-          "name": "Mack3",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Test13",
+          "streamLink": "https://alarmtest.ceec.echem.io/test_1"
         }
       ]
     }
