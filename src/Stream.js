@@ -269,7 +269,7 @@ gap={0}
 
   render() {
     console.log("stream rendered" + this.state.solo);
-    let color = this.state.solo ? "red" : "green";
+    let color = this.state.solo ? "green" : "red";
     return <StreamDiv>
           <SoloButton type="button" value="Solo" onClick={this.onSoloClick} solo={color}/>
           <StreamTitle>{this.props.name} 🔊</StreamTitle>
