@@ -87,9 +87,7 @@ class Stream extends React.Component {
     const audioElement = document.getElementById("audio_" + this.props.name);
 
     audioElement.addEventListener('volumechange', () => {
-      console.log("Audio event");
       if (audioElement.muted) {
-        console.log(this.props.name + " audio event");
         if (this.state.solo) {
           this.setState({solo: false});
         }

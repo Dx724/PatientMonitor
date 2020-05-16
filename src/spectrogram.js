@@ -52,7 +52,6 @@
   }
 
   Spectrogram.prototype._init = function() {
-    console.log("init called");
     var source = this._sources.audioBufferStream;
     source.scriptNode = source.audioContext.createScriptProcessor(2048, 1, 1);
     source.scriptNode.connect(source.audioContext.destination);
@@ -118,7 +117,6 @@
   };
 
   Spectrogram.prototype.connectSource = function(audioBuffer, audioContext) {
-    console.log("connected source") //CHANGE
     var source = this._sources.audioBufferStream || {};
 
     // clear current audio process

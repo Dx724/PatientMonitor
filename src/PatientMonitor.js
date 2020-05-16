@@ -24,8 +24,9 @@ class PatientMonitor extends React.Component {
     this.state = {dropdownList: streamData.rooms.map((room) => room.identifier),  
       roomObjs: [],
       forceUpdate: true,
-      open: false,
-      lastRemoved: null
+      snackbarsnackbarOpen: false,
+      snackPack: [],
+      messageInfo: undefined
     };
 
     this.roomAddCounter = new Map();
@@ -37,6 +38,8 @@ class PatientMonitor extends React.Component {
     this.onRoomAdd = this.onRoomAdd.bind(this);
     this.onRoomRemove = this.onRoomRemove.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+    this.handleSnackbarExited = this.handleSnackbarExited.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
 
   incrementRoomAddCounter(roomIdentifier) {
@@ -46,19 +49,24 @@ class PatientMonitor extends React.Component {
   onRoomAdd(roomIdentifier) {
     console.log(roomIdentifier + " added");
     this.incrementRoomAddCounter(roomIdentifier);
-
+    let message = roomIdentifier + " added!"
     this.state.roomObjs.push(streamData.rooms[streamData.rooms.map(room => room.identifier).indexOf(roomIdentifier)]);
     this.state.dropdownList.splice(this.state.dropdownList.indexOf(roomIdentifier), 1);
-    this.setState({forceUpdate: !this.state.forceUpdate});
+    this.state.snackPack.push({ message, key: new Date().getTime() });
+    this.setState({
+      forceUpdate: !this.state.forceUpdate,
+    });
   }
 
   onRoomRemove(roomIdentifier) {
     console.log(roomIdentifier + " removed");
+    let message = roomIdentifier + " removed!"
     this.state.dropdownList.push(roomIdentifier);
     this.state.roomObjs.splice(this.state.roomObjs.findIndex((room) => (room.identifier === roomIdentifier)), 1);
-    this.setState({forceUpdate: !this.state.forceUpdate,
-                  open: true,
-                  lastRemoved: roomIdentifier});
+    this.state.snackPack.push({ message, key: new Date().getTime() });
+    this.setState({
+      forceUpdate: !this.state.forceUpdate
+    });
   }
 
   muteTemp(mute) {
@@ -77,8 +85,25 @@ class PatientMonitor extends React.Component {
     }
   }
 
-  handleSnackbarClose(event, reason){
-    this.setState({open: false});
+  componentDidUpdate() {
+    if (this.state.snackPack.length && !this.state.messageInfo) {
+      this.setState({ 
+        messageInfo: {...this.state.snackPack[0]},
+        snackPack: this.state.snackPack.slice(1),
+        snackbarOpen: true
+      });
+    }
+    else if (this.state.snackPack.length && this.state.messageInfo && this.state.snackbarsnackbarOpen) {
+      this.setState({snackbarOpen: false});
+    }
+  }
+
+  handleSnackbarExited() {
+    this.setState({messageInfo: undefined});
+  }
+
+  handleSnackbarClose(event, reason){ 
+    this.setState({snackbarOpen: false});
   };
 
   render() {
@@ -89,21 +114,20 @@ class PatientMonitor extends React.Component {
         {this.state.roomObjs.map(room => (
           <Room key={room.identifier} identifier={room.identifier} streams={room.streams} addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
         ))}
-        <Snackbar 
+        <Snackbar
+          key={this.state.messageInfo ? this.state.messageInfo.key : undefined}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
           }} 
-          open={this.state.open} autoHideDuration={6000} onClose={this.handleSnackbarClose}
-          /*message={"Successfully added " + this.state.value +"!"} 
-          action={
-              <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleSnackbarClose}>
-                <CloseIcon fontSize="small" />
-              </IconButton>
-          }*/>
-          <Alert onClose={this.handleSnackbarClose} severity="success">
-            Removed {this.state.lastRemoved}!
-          </Alert>
+          open={this.state.snackbarOpen}
+          autoHideDuration={3000}
+          onClose={this.handleSnackbarClose}
+          onExited={this.handleSnackbarExited}
+          >
+            <Alert onClose={this.handleSnackbarClose} severity="success">
+              {this.state.messageInfo ? this.state.messageInfo.message : undefined}
+            </Alert>
           </Snackbar>
       </ContainerDiv>
     );
