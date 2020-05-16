@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 //import AudioSpectrum from "react-audio-spectrum";
-import Spectrogram from '../node_modules/spectrogram';
+//import Spectrogram from '../node_modules/spectrogram';
+import Spectrogram from './spectrogram';
 import Switch from '@material-ui/core/Switch';
 import IconButton from '@material-ui/core/IconButton';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
@@ -106,8 +107,8 @@ class Stream extends React.Component {
       this.setState({muted: false});
     }, false);
 
-    this.audioStream = this.audioCtx.createMediaElementSource(audioElement);
-    this.audioStream2 = this.audioCtx2.createMediaElementSource(audioElement2);
+    this.audioStream = this.audioCtx.createMediaElementSource(audioElement2);
+    this.audioStream2 = this.audioCtx2.createMediaElementSource(audioElement);
  
     var spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
       canvas: {
@@ -115,7 +116,7 @@ class Stream extends React.Component {
         height: 60
       },
       audio: {
-        enable: false
+        enable: true
       },
       colors: function(steps) {
         var baseColors = [[0,0,255,1], [0,255,255,1], [0,255,0,1], [255,255,0,1], [ 255,0,0,1]];
@@ -141,11 +142,12 @@ class Stream extends React.Component {
 
     this.audioStream.connect(this.bandpassFilter);
     this.bandpassFilter.connect(this.gainNode);
-    this.gainNode.connect(this.audioCtx.destination);
+    //this.gainNode.connect(this.audioCtx.destination);
 
     this.audioStream2.connect(this.bandpassFilter2);
     this.bandpassFilter2.connect(this.gainNode2);
     this.gainNode2.connect(analyser);
+    analyser.connect(this.audioCtx2.destination);
     
     spectro.connectSource(analyser, this.audioCtx2);
     spectro.start();
