@@ -18,7 +18,7 @@ function CircularDeterminate(props) {
 
   return (
     <div>
-      <CircularProgress variant="determinate" value={progress} />
+      <CircularProgress variant="determinate" style={{color: '#1976d2'}}value={progress} />
     </div>
   );
 }
