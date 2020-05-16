@@ -26,7 +26,7 @@ function CircularDeterminate(props) {
 export default function TimerButton(props) {
   return (
     <div>
-      <IconButton onClick={props.onClick}>
+      <IconButton onClick={props.onClick} size='small'>
         <CircularDeterminate/>
       </IconButton>
     </div>

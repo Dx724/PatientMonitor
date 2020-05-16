@@ -227,7 +227,7 @@ gap={0}
       else {
         icon = <VolumeUpRoundedIcon fontSize='large' style={{fill: "black"}}/>;
       }
-      soloButton = <IconButton type="button" onClick={this.onSoloClick}>
+      soloButton = <IconButton type="button" onClick={this.onSoloClick} size='small'>
           {icon}
         </IconButton>;
     }
