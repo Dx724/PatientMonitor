@@ -286,7 +286,6 @@ gap={0}
             defaultChecked={true} value={this.state.toggleValue}/>
             <ToggleLabel htmlFor={"checkbox_" + this.props.name} />
           </ToggleDiv>
-          <p>{color}</p>
 
         </StreamDiv>;
   }
