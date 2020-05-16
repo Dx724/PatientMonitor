@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import Stream from './Stream.js';
 
-
 const RoomDiv = styled.div`
   display: inline-block;
   background-color: aliceblue;
@@ -46,27 +45,25 @@ class Room extends React.Component {
 
   componentWillUnmount(){
     console.log("unmounted");
-    
-
   }
 
   render() {
     console.log("render");
-    return <RoomDiv>
-      <h3 class="roomTitle">{this.props.identifier}</h3>
-      {this.props.streams.map((stream) => (
-        <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink/*this.streamProxy(stream)*/} /*Uncomment left for proxy*/
-        muteFunction={this.props.muteFunction}/>
-      ))}
-      <br/>
-      <Button variant="contained" color="primary" onClick={this.onRemoveClick} style={{background: '#1976d2'}}
-      startIcon={<CloseIcon fontSize="small" />}>
-        Remove
-      </Button>
-    </RoomDiv>;
+    return( 
+      <RoomDiv>
+        <h3 class="roomTitle">{this.props.identifier}</h3>
+        {this.props.streams.map((stream) => (
+          <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink/*this.streamProxy(stream)*/} /*Uncomment left for proxy*/
+          muteFunction={this.props.muteFunction}/>
+        ))}
+        <br/>
+        <Button variant="contained" color="primary" onClick={this.onRemoveClick} style={{background: '#1976d2'}}
+        startIcon={<CloseIcon fontSize="small" />}>
+          Remove
+        </Button>
+      </RoomDiv>
+    );
   }
 }
 
 export default Room;
-
-/*<input type="button" onClick={this.onRemoveClick} value="Remove"></input>*/

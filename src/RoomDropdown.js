@@ -14,65 +14,67 @@ function Alert(props) {
 }
 
 class RoomDropdown extends React.Component {
-  
   constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.handleClose = this.handleClose.bind(this);
-        this.state = {open: false,
-                      value: ''
+        this.state = {
+          open: false,
+          value: ''
         };
   }
 
   onChange (event) {
     event.preventDefault();
     this.props.changeHandler(event.target.value);
-    this.setState({open: true,
-                  value: event.target.value});
-    this.setState({value: event.target.value});
+    this.setState({
+      open: true,
+      value: event.target.value
+    });
   }
 
   handleClose (event, reason){
     this.setState({open: false});
   };
+
+  //Use NativeSelect for mobile
   
   render() {
     return( 
-    <div>
-      <FormControl style={{minWidth: 120}}>
-      <InputLabel /*htmlFor="roomSelector"*/ id="select-label">Rooms </InputLabel>
-      <Select id="roomSelector" labelId="select-label" value={''} onChange={this.onChange}>
-        {this.props.options.map(option => (
-          <MenuItem key={option} value={option}>{option}</MenuItem>
-        ))}
-      </Select>
-      </FormControl>
+      <div>
+        <FormControl style={{minWidth: 120}}>
+        <InputLabel /*htmlFor="roomSelector"*/ id="select-label">Rooms </InputLabel>
+        <Select id="roomSelector" labelId="select-label" value={''} onChange={this.onChange}>
+          {this.props.options.map(option => (
+              <MenuItem key={option} value={option}>{option}</MenuItem>
+          ))}
+        </Select>
+        </FormControl>
 
-      <Snackbar 
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }} 
-        open={this.state.open} autoHideDuration={6000} onClose={this.handleClose}
+       <Snackbar 
+         anchorOrigin={{
+           vertical: 'bottom',
+           horizontal: 'left',
+         }} 
+         open={this.state.open} autoHideDuration={6000} onClose={this.handleClose}
         /*message={"Successfully added " + this.state.value +"!"} 
         action={
             <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
               <CloseIcon fontSize="small" />
             </IconButton>
         }*/>
-        <Alert onClose={this.handleClose} severity="success">
-          Added {this.state.value}!
-        </Alert>
-      </Snackbar>
-      
-    </div>
+          <Alert onClose={this.handleClose} severity="success">
+            Added {this.state.value}!
+          </Alert>
+        </Snackbar>
+      </div>
     );
   }
 }
-
-export default RoomDropdown;
 
 /*<Alert onClose={this.handleClose} severity="success">
           Added {this.state.value}!
         </Alert>
         </Snackbar>*/
+
+export default RoomDropdown;

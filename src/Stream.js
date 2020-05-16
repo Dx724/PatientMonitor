@@ -230,7 +230,6 @@ meterColor={[
 gap={0}
 />*/
 
-
   render() {
     console.log(this.props.name + "stream rendered");
     let soloButton;
