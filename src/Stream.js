@@ -97,6 +97,7 @@ class Stream extends React.Component {
     const audioElement2 = document.getElementById("audio2_" + this.props.name);
 
     audioElement.addEventListener('volumechange', () => {
+      console.log("Audio event");
       if (audioElement.muted) {
         console.log(this.props.name + " audio event");
         if (this.state.solo) {
@@ -104,7 +105,10 @@ class Stream extends React.Component {
         }
         this.setState({muted: true});
       }
-      this.setState({muted: false});
+      else {
+        this.setState({muted: false});
+      }
+      
     }, false);
 
     this.audioStream = this.audioCtx.createMediaElementSource(audioElement2);
