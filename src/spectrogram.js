@@ -1,6 +1,4 @@
 (function(root) {
-  'use strict';
-
   function _isFunction(v) {
     return typeof v === 'function';
   }

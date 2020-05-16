@@ -51,7 +51,7 @@ class Room extends React.Component {
     console.log("render");
     return( 
       <RoomDiv>
-        <h3 class="roomTitle">{this.props.identifier}</h3>
+        <h3 className="roomTitle">{this.props.identifier}</h3>
         {this.props.streams.map((stream) => (
           <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink/*this.streamProxy(stream)*/} /*Uncomment left for proxy*/
           muteFunction={this.props.muteFunction}/>

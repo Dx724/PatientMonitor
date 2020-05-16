@@ -260,10 +260,10 @@ gap={0}
           {soloButton}
           <StreamTitle>{this.props.name} 🔊</StreamTitle>
           <canvas id={"audio_canvas_" + this.props.name} style={{borderRadius: '4px'}}> </canvas>
-          <audio style={{display: 'none'}} crossOrigin="anonymous" class="stream" id={"audio_" + this.props.name} autoPlay>
+          <audio style={{display: 'none'}} crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} autoPlay>
             <source src={this.props.streamLink}></source>
           </audio>
-          <audio style={{display: 'none'}} crossOrigin="anonymous" class="fakestream" id={"audio2_" + this.props.name} autoPlay>
+          <audio style={{display: 'none'}} crossOrigin="anonymous" className="fakestream" id={"audio2_" + this.props.name} autoPlay>
             <source src={this.props.streamLink}></source>
           </audio>
 
