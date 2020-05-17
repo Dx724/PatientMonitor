@@ -17,18 +17,14 @@ function CircularDeterminate(props) {
   }, [progress]);
 
   return (
-    <div>
-      <CircularProgress variant="determinate" style={{color: '#1976d2'}} value={progress} />
-    </div>
+      <CircularProgress variant="determinate" style={{color: '#1976d2'}} value={progress} size={35}/>
   );
 }
 
 export default function TimerButton(props) {
   return (
-    <div>
       <IconButton onClick={props.onClick} size='small'>
         <CircularDeterminate/>
       </IconButton>
-    </div>
   );
 }
