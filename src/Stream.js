@@ -118,8 +118,8 @@ class Stream extends React.Component {
 
     var spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
       canvas: {
-        width: 250,
-        height: 60
+        width: 300,
+        height: 80
       },
       audio: {
         enable: true
@@ -145,7 +145,7 @@ class Stream extends React.Component {
 
     var analyser = this.audioCtx.createAnalyser();
     analyser.smoothingTimeConstant = 0;
-    analyser.fftSize = 1024;
+    analyser.fftSize = 512;
 
     this.audioStream.connect(this.bandpassFilter);
     this.bandpassFilter.connect(this.gainNode);
