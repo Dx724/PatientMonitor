@@ -8,7 +8,7 @@ function CircularDeterminate(props) {
 
   React.useEffect(() => {
     function tick() {
-      setProgress((progress) => (progress >= 100 ? 100 : progress + 1/6.5));
+      setProgress((progress) => (progress >= 100 ? 100 : progress + 1 / 6.5));
     }
 
     const timer = setInterval(tick, 20);
@@ -18,7 +18,7 @@ function CircularDeterminate(props) {
   }, [progress]);
 
   return (
-      <CircularProgress variant="determinate" style={{color: '#1976d2'}} value={progress} size={35}
+    <CircularProgress variant="determinate" style={{ color: '#1976d2' }} value={progress} size={35}
       disableShrink={true} /*For heavy load situations*/ />
   );
 }
@@ -27,7 +27,7 @@ export default function TimerButton(props) {
   return (
     <Tooltip title={"Unmute all"} arrow>
       <IconButton onClick={props.onClick} size='small'>
-        <CircularDeterminate/>    
+        <CircularDeterminate />
       </IconButton>
     </Tooltip>
   );

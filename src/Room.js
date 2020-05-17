@@ -23,7 +23,7 @@ class Room extends React.Component {
   onRemoveClick(event) {
     event.preventDefault();
     var mediaElement;
-    for (let i=0; i < this.props.streams.length; i++) {
+    for (let i = 0; i < this.props.streams.length; i++) {
       mediaElement = document.getElementById("audio_" + this.props.streams[i].name);
       mediaElement.removeAttribute("src");
       mediaElement.load();
@@ -35,26 +35,26 @@ class Room extends React.Component {
     return stream.streamLink + "_" + this.props.addCounter;
   }
 
-  componentDidMount () {
+  componentDidMount() {
     console.log("mounted");
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     console.log("unmounted");
   }
 
   render() {
     console.log("render");
-    return( 
+    return (
       <RoomDiv>
         <h3 className="roomTitle">{this.props.identifier}</h3>
         {this.props.streams.map((stream) => (
           <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink/*this.streamProxy(stream)*/} /*Uncomment left for proxy*/
-          muteFunction={this.props.muteFunction}/>
+            muteFunction={this.props.muteFunction} />
         ))}
-        <br/>
-        <Button variant="contained" color="primary" onClick={this.onRemoveClick} style={{background: '#1976d2'}}
-        startIcon={<CloseIcon fontSize="small" />}>
+        <br />
+        <Button variant="contained" color="primary" onClick={this.onRemoveClick} style={{ background: '#1976d2' }}
+          startIcon={<CloseIcon fontSize="small" />}>
           Remove
         </Button>
       </RoomDiv>

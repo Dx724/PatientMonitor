@@ -7,16 +7,16 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 class RoomDropdown extends React.Component {
   constructor(props) {
-        super(props);
-        this.onChange = this.onChange.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.state = {
-          open: false,
-          value: ''
-        };
+    super(props);
+    this.onChange = this.onChange.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.state = {
+      open: false,
+      value: ''
+    };
   }
 
-  onChange (event) {
+  onChange(event) {
     event.preventDefault();
     this.props.changeHandler(event.target.value);
     this.setState({
@@ -25,16 +25,16 @@ class RoomDropdown extends React.Component {
     });
   }
 
-  handleClose (event, reason){
-    this.setState({open: false});
+  handleClose(event, reason) {
+    this.setState({ open: false });
   };
 
   //Use NativeSelect for mobile
-  
+
   render() {
-    return( 
+    return (
       <div>
-        <FormControl style={{minWidth: 120}}>
+        <FormControl style={{ minWidth: 120 }}>
           <InputLabel /*htmlFor="roomSelector"*/ id="select-label">Rooms </InputLabel>
           <Select id="roomSelector" labelId="select-label" value={''} onChange={this.onChange}>
             {this.props.options.map(option => (
