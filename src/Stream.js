@@ -30,7 +30,7 @@ const StreamTitleDiv = styled.div`
   align-items: center;
 `;
 
-const StreamTitle = styled.p`
+const StreamTitle = styled.b`
   display: inline-block;
   margin-left: 5px;
   margin-right: 5px;
