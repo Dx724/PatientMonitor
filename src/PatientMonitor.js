@@ -20,18 +20,19 @@ const HeaderDiv = styled.div`
   display: flex;
   margin: 0;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const InstructionDiv = styled.div`
   margin-left: auto;
   margin-right: 8px;
+  margin-top: 8px;
 `;
 
 const TitleDiv = styled.div`
   text-align: center;
-  width: 20vw;
-  margin-left: 40vw;
+  width: 30vw;
+  margin-left: 35vw;
 `;
 
 const Title = styled.h2`
