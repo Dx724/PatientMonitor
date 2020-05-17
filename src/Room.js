@@ -24,7 +24,9 @@ class Room extends React.Component {
   onRemoveClick(event) {
     event.preventDefault();
     for (let i = 0; i < this.streamRefs.length; i++) {
-      this.streamRefs[i].cleanUp();
+      if (this.streamRefs[i].cleanUp()) { // returns solo value of the stream
+        this.props.muteFunction(false);
+      }
     }
     this.props.onRemoveClick(this.props.identifier);
   }

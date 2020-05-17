@@ -173,6 +173,7 @@ class Stream extends React.Component {
     this.spectro.forceStop();
     this.audioElement.removeAttribute("src");
     this.audioElement.load();
+    return this.state.solo;
   }
 
   onSoloClick(event) {
