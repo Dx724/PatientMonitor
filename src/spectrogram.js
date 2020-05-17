@@ -23,6 +23,9 @@
       audioBufferStream: null,
       userMediaStream: null
     };
+
+    this._forceStop = false; // CHANGE
+
     this._baseCanvas = canvas;
     this._baseCanvasContext = this._baseCanvas.getContext('2d');
 
@@ -110,11 +113,13 @@
   };
 
   Spectrogram.prototype._startMediaStreamDraw = function (analyser, canvasContext) {
-    window.requestAnimationFrame(this._startMediaStreamDraw.bind(this, analyser, canvasContext));
-    var arrayLength = Math.min(canvasContext.canvas.height + 5 + 4, analyser.frequencyBinCount);
-    var audioData = new Uint8Array(arrayLength);
-    analyser.getByteFrequencyData(audioData);
-    this._draw(audioData, canvasContext);
+    if (!this._forceStop) {
+      window.requestAnimationFrame(this._startMediaStreamDraw.bind(this, analyser, canvasContext));
+      var arrayLength = Math.min(canvasContext.canvas.height + 5 + 4, analyser.frequencyBinCount);
+      var audioData = new Uint8Array(arrayLength);
+      analyser.getByteFrequencyData(audioData);
+      this._draw(audioData, canvasContext);
+    }
   };
 
   Spectrogram.prototype.connectSource = function (audioBuffer, audioContext) {
@@ -194,6 +199,10 @@
       this._startMediaStreamDraw(source.analyser, canvasContext);
     }
   };
+
+  Spectrogram.prototype.forceStop = function () {
+    this._forceStop = true;
+  }
 
   Spectrogram.prototype.stop = function () {
     var source = this._sources[Object.keys(this._sources)[0]];

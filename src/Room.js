@@ -18,15 +18,13 @@ class Room extends React.Component {
     this.onRemoveClick = this.onRemoveClick.bind(this);
     this.streamProxy = this.streamProxy.bind(this);
     this.componentWillUnmount = this.componentWillUnmount(this);
+    this.streamRefs = [];
   } // JSON array passed into props as props.streams, room name passed as props.identifier
 
   onRemoveClick(event) {
     event.preventDefault();
-    var mediaElement;
-    for (let i = 0; i < this.props.streams.length; i++) {
-      mediaElement = document.getElementById("audio_" + this.props.streams[i].name);
-      mediaElement.removeAttribute("src");
-      mediaElement.load();
+    for (let i = 0; i < this.streamRefs.length; i++) {
+      this.streamRefs[i].cleanUp();
     }
     this.props.onRemoveClick(this.props.identifier);
   }
@@ -48,9 +46,11 @@ class Room extends React.Component {
     return (
       <RoomDiv>
         <h3 className="roomTitle">{this.props.identifier}</h3>
-        {this.props.streams.map((stream) => (
+        {this.props.streams.map((stream, i) => (
           <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink/*this.streamProxy(stream)*/} /*Uncomment left for proxy*/
-            muteFunction={this.props.muteFunction} audioContext={this.props.audioContext}/>
+            muteFunction={this.props.muteFunction} audioContext={this.props.audioContext} 
+            ref={ref => { this.streamRefs[i] = ref; }
+          }/>
         ))}
         <br />
         <Button variant="contained" color="primary" onClick={this.onRemoveClick} style={{ background: '#1976d2' }}

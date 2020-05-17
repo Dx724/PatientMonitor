@@ -75,6 +75,8 @@ class Stream extends React.Component {
     };
 
     this.audioCtx = this.props.audioContext;
+    this.audioElement = null;
+    this.spectro = null;
 
     var fStart = 750;
     var fEnd = 2800;
@@ -92,16 +94,17 @@ class Stream extends React.Component {
     this.onSoloClick = this.onSoloClick.bind(this);
     this.onToggleChange = this.onToggleChange.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
+    this.cleanUp = this.cleanUp.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillUnmount = this.componentWillUnmount(this);
   }
 
   componentDidMount() {
     // Initialize an audio context
-    const audioElement = document.getElementById("audio_" + this.props.name);
+    this.audioElement = document.getElementById("audio_" + this.props.name);
 
-    audioElement.addEventListener('volumechange', () => {
-      if (audioElement.muted) {
+    this.audioElement.addEventListener('volumechange', () => {
+      if (this.audioElement.muted) {
         if (this.state.solo) {
           this.setState({ solo: false });
         }
@@ -113,9 +116,9 @@ class Stream extends React.Component {
 
     }, false);
 
-    this.audioStream = this.audioCtx.createMediaElementSource(audioElement);
+    this.audioStream = this.audioCtx.createMediaElementSource(this.audioElement);
 
-    var spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
+    this.spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
       canvas: {
         width: 300,
         height: 80
@@ -151,8 +154,8 @@ class Stream extends React.Component {
     this.gainNode.connect(analyser);
     this.gainNode.connect(this.audioCtx.destination);
 
-    spectro.connectSource(analyser, this.audioCtx);
-    spectro.start();
+    this.spectro.connectSource(analyser, this.audioCtx);
+    this.spectro.start();
 
     if (this.audioCtx.state === 'suspended') {
       this.audioCtx.resume();
@@ -163,6 +166,13 @@ class Stream extends React.Component {
   componentWillUnmount() {
     //this.audioCtx.close();
     console.log("stream unmounted");
+  }
+
+  cleanUp() {
+    clearTimeout(soloTimeout);
+    this.spectro.forceStop();
+    this.audioElement.removeAttribute("src");
+    this.audioElement.load();
   }
 
   onSoloClick(event) {
