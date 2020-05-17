@@ -252,7 +252,9 @@ gap={0}
       <StreamDiv>
         {soloButton}
         <StreamTitleDiv>
-          <StreamTitle>{this.props.name} 🔊</StreamTitle>
+          <StreamTitle>{this.props.name + " "}
+            <span role="img" aria-label="volume-emoji"> 🔊 </span>
+          </StreamTitle>
         </StreamTitleDiv>
         <SpectogramCanvas id={"audio_canvas_" + this.props.name} />
         <AudioStream crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} autoPlay>
