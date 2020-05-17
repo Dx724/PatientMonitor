@@ -90,8 +90,8 @@
     var tempCanvas = tempCanvasContext.canvas;
     tempCanvasContext.drawImage(canvas, 0, 0, width, height);
 
-    for (var i = 0; i < Math.min(height + 5, array.length) /*CHANGE*/; i++) {
-      var value = array[i];
+    for (var i = 0; i < Math.min(array.length - 4) /*CHANGE*/; i++) {
+      var value = array[i + 4];
       canvasContext.fillStyle = this._getColor(value);
       if (this._audioEnded) {
         canvasContext.fillStyle = this._getColor(0);
@@ -111,7 +111,8 @@
 
   Spectrogram.prototype._startMediaStreamDraw = function (analyser, canvasContext) {
     window.requestAnimationFrame(this._startMediaStreamDraw.bind(this, analyser, canvasContext));
-    var audioData = new Uint8Array(analyser.frequencyBinCount);
+    var arrayLength = Math.min(canvasContext.canvas.height + 5 + 4, analyser.frequencyBinCount);
+    var audioData = new Uint8Array(arrayLength);
     analyser.getByteFrequencyData(audioData);
     this._draw(audioData, canvasContext);
   };
