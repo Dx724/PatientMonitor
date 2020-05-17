@@ -102,7 +102,7 @@
     canvasContext.translate(-1, 0);
     // draw prev canvas before translation
     canvasContext.drawImage(tempCanvas, 0, 0, width, height, 0, 0, width, height);
-    canvasContext.drawImage(tempCanvas, 0, 0, width, height, 0, 0, width, height);
+    //Who knows why this was done twice.... canvasContext.drawImage(tempCanvas, 0, 0, width, height, 0, 0, width, height);
     // reset transformation matrix
     canvasContext.setTransform(1, 0, 0, 1, 0, 0);
 
