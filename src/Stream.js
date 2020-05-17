@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 //import AudioSpectrum from "react-audio-spectrum";
-//import Spectrogram from '../node_modules/spectrogram';
 import Spectrogram from './spectrogram';
 import Switch from '@material-ui/core/Switch';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,7 +13,7 @@ import chroma from "chroma-js";
 const StreamDiv = styled.div`
   background-color: lightsteelblue;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   margin: 5px;
   padding: 5px;
@@ -22,21 +21,34 @@ const StreamDiv = styled.div`
   width: calc(100% - 30px);
 `;
 
-const StreamTitle = styled.p`
-  display: inline-block;
-  margin-left: 10px;
-  margin-right: 10px;
+const StreamTitleDiv = styled.div`
+  display: flex;
+  width: 200px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
 `;
 
-/*const AudioStream = styled.audio`
+const StreamTitle = styled.p`
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+`;
+
+const SpectogramCanvas = styled.canvas`
+  border-radius: 4px;
+`;
+
+const AudioStream = styled.audio`
   display: none;
-`;*/
+`;
 
 const ToggleDiv = styled.div`
   position: relative;
 `;
 
 const BlueSwitch = withStyles({
+  colorPrimary: '#1976d2',
   switchBase: {
     color: '#fafafa',
     '&$checked': {
@@ -232,15 +244,17 @@ gap={0}
 
     return <StreamDiv>
           {soloButton}
-          <StreamTitle>{this.props.name} 🔊</StreamTitle>
-          <canvas id={"audio_canvas_" + this.props.name} style={{borderRadius: '4px'}}> </canvas>
-          <audio style={{display: 'none'}} crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} autoPlay>
-            <source src={this.props.streamLink}></source>
-          </audio>
+          <StreamTitleDiv>
+            <StreamTitle>{this.props.name} 🔊</StreamTitle>
+          </StreamTitleDiv>
+          <SpectogramCanvas id={"audio_canvas_" + this.props.name}/> 
+          <AudioStream crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} autoPlay>
+            <source src={this.props.streamLink}/>
+          </AudioStream>
 
           <ToggleDiv>
             <BlueSwitch id={"checkbox_" + this.props.name} type="checkbox" onChange={this.onToggleChange} 
-            defaultChecked={true} value={this.state.toggleValue} style={{colorPrimary: '#1976d2'}} color="primary"/>
+            defaultChecked={true} value={this.state.toggleValue} color="primary"/>
           </ToggleDiv>
 
         </StreamDiv>;
