@@ -10,11 +10,28 @@ const ContainerDiv = styled.div`
   text-align: center;
 `;
 
+const Title = styled.h2`
+  margin-bottom: 5px;
+`;
+
+const RefreshButton = styled.input`
+  background: none;
+  border: none;
+  color: white;
+  text-decoration: underline;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0;
+  cursor: pointer;
+`;
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const confirmationMessage = "Welcome to Patient Monitoring System.";
+const mutePeriod = 15 * 1000;
+const initialRefreshPeriod = 60 * 60 * 1000;
+const refreshInterval = 60 * 60 * 1000;
 
 var soloTimeout = null;
 
@@ -24,7 +41,8 @@ class PatientMonitor extends React.Component {
     this.state = {dropdownList: streamData.rooms.map((room) => room.identifier),  
       roomObjs: [],
       forceUpdate: true,
-      snackbarsnackbarOpen: false,
+      snackbarOpen: false,
+      refreshOpen: false,
       snackPack: [],
       messageInfo: undefined
     };
@@ -38,8 +56,10 @@ class PatientMonitor extends React.Component {
     this.onRoomAdd = this.onRoomAdd.bind(this);
     this.onRoomRemove = this.onRoomRemove.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+    this.handleRefreshSnackbarClose = this.handleRefreshSnackbarClose.bind(this);
     this.handleSnackbarExited = this.handleSnackbarExited.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   incrementRoomAddCounter(roomIdentifier) {
@@ -81,8 +101,18 @@ class PatientMonitor extends React.Component {
         for (let stream of document.getElementsByClassName("stream")) {
           stream.muted = false;
         }
-      }, 15*1000);
+      }, mutePeriod);
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      setInterval( () => {
+        this.setState({refreshOpen: true});
+      }, initialRefreshPeriod);
+      
+      this.setState({refreshOpen: true})
+    }, refreshInterval);
   }
 
   componentDidUpdate() {
@@ -106,11 +136,24 @@ class PatientMonitor extends React.Component {
     this.setState({snackbarOpen: false});
   };
 
+  handleRefreshSnackbarClose(event, reason){ 
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({refreshOpen: false});
+  };
+
+  onRefreshClick(event) {
+    event.preventDefault();
+    window.location.reload();
+  }
+
   render() {
     return (
       <ContainerDiv>
+        <Title>Alarm Monitoring System</Title>
         <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
-        <p>{confirmationMessage}</p>
+        <br/>
         {this.state.roomObjs.map(room => (
           <Room key={room.identifier} identifier={room.identifier} streams={room.streams} addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} muteFunction={this.muteTemp}/>
         ))}
@@ -128,7 +171,24 @@ class PatientMonitor extends React.Component {
             <Alert onClose={this.handleSnackbarClose} severity="success">
               {this.state.messageInfo ? this.state.messageInfo.message : undefined}
             </Alert>
-          </Snackbar>
+        </Snackbar>
+
+        <Snackbar
+          key="refreshSnackbar"
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }} 
+          open={this.state.refreshOpen}
+          onClose={this.handleRefreshSnackbarClose}
+          >
+            <Alert onClose={this.handleRefreshSnackbarClose} severity="warning">
+              {"Please "}
+              <RefreshButton type="button" value="refresh" onClick={this.onRefreshClick}/>
+              {" for improved performance."}
+            </Alert>
+        </Snackbar>
+
       </ContainerDiv>
     );
   }
