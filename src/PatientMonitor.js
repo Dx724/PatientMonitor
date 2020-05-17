@@ -86,7 +86,6 @@ class PatientMonitor extends React.Component {
 
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
-    console.log(this.audioCtx.sampleRate);
 
     this.onRoomAdd = this.onRoomAdd.bind(this);
     this.onRoomRemove = this.onRoomRemove.bind(this);
@@ -104,7 +103,6 @@ class PatientMonitor extends React.Component {
   }
 
   onRoomAdd(roomIdentifier) {
-    console.log(roomIdentifier + " added");
     this.incrementRoomAddCounter(roomIdentifier);
     let message = roomIdentifier + " added!"
     this.state.roomObjs.push(streamData.rooms[streamData.rooms.map(room => room.identifier).indexOf(roomIdentifier)]);
@@ -116,7 +114,6 @@ class PatientMonitor extends React.Component {
   }
 
   onRoomRemove(roomIdentifier) {
-    console.log(roomIdentifier + " removed");
     let message = roomIdentifier + " removed!"
     this.state.dropdownList.push(roomIdentifier);
     this.state.roomObjs.splice(this.state.roomObjs.findIndex((room) => (room.identifier === roomIdentifier)), 1);
@@ -186,13 +183,11 @@ class PatientMonitor extends React.Component {
   }
 
   onInstructionClick(event) {
-    console.log("open");
     event.preventDefault();
     this.setState({ instructionOpen: true });
   }
 
   handleInstructionClose() {
-    console.log("close");
     this.setState({ instructionOpen: false });
   }
 

@@ -75,7 +75,6 @@ class Stream extends React.Component {
     };
 
     this.audioCtx = this.props.audioContext;
-    console.log (this.audioCtx === null);
 
     var fStart = 750;
     var fEnd = 2800;
@@ -257,9 +256,9 @@ gap={0}
           </StreamTitle>
         </StreamTitleDiv>
         <SpectogramCanvas id={"audio_canvas_" + this.props.name} />
-        <AudioStream crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} autoPlay>
-          <source src={this.props.streamLink} />
-        </AudioStream>
+        <AudioStream crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} 
+          autoPlay src={this.props.streamLink} 
+        />
 
         <Tooltip title="Noise Filter" arrow>
           <ToggleDiv>

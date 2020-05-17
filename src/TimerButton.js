@@ -18,8 +18,7 @@ function CircularDeterminate(props) {
   }, [progress]);
 
   return (
-    <CircularProgress variant="determinate" style={{ color: '#1976d2' }} value={progress} size={35}
-      disableShrink={true} /*For heavy load situations*/ />
+    <CircularProgress variant="determinate" style={{ color: '#1976d2' }} value={progress} size={35}/>
   );
 }
 
