@@ -6,6 +6,7 @@ import Switch from '@material-ui/core/Switch';
 import IconButton from '@material-ui/core/IconButton';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
+import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import TimerButton from './TimerButton.js'
 import chroma from "chroma-js";
@@ -238,26 +239,31 @@ gap={0}
         icon = <VolumeUpRoundedIcon fontSize='large' style={{fill: "black"}}/>;
       }
       soloButton = <IconButton type="button" onClick={this.onSoloClick} size='small'>
-          {icon}
-        </IconButton>;
+                    <Tooltip title={"Mute others"} arrow>
+                      {icon}
+                    </Tooltip>
+                  </IconButton>;
     }
 
-    return <StreamDiv>
-          {soloButton}
-          <StreamTitleDiv>
-            <StreamTitle>{this.props.name} 🔊</StreamTitle>
-          </StreamTitleDiv>
-          <SpectogramCanvas id={"audio_canvas_" + this.props.name}/> 
-          <AudioStream crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} autoPlay>
-            <source src={this.props.streamLink}/>
-          </AudioStream>
+    return( 
+      <StreamDiv>
+        {soloButton}
+        <StreamTitleDiv>
+          <StreamTitle>{this.props.name} 🔊</StreamTitle>
+        </StreamTitleDiv>
+        <SpectogramCanvas id={"audio_canvas_" + this.props.name}/> 
+        <AudioStream crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} autoPlay>
+          <source src={this.props.streamLink}/>
+        </AudioStream>
 
+        <Tooltip title="Noise Filter" arrow>
           <ToggleDiv>
             <BlueSwitch id={"checkbox_" + this.props.name} type="checkbox" onChange={this.onToggleChange} 
-            defaultChecked={true} value={this.state.toggleValue} color="primary"/>
+              defaultChecked={true} value={this.state.toggleValue} color="primary"/>
           </ToggleDiv>
-
-        </StreamDiv>;
+        </Tooltip>
+      </StreamDiv>
+    );
   }
 }
 
