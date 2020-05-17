@@ -145,7 +145,7 @@ class Stream extends React.Component {
 
     var analyser = this.audioCtx.createAnalyser();
     analyser.smoothingTimeConstant = 0;
-    analyser.fftSize = 256;
+    analyser.fftSize = 1024;
 
     this.audioStream.connect(this.bandpassFilter);
     this.bandpassFilter.connect(this.gainNode);

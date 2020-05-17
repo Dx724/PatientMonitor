@@ -90,7 +90,7 @@
     var tempCanvas = tempCanvasContext.canvas;
     tempCanvasContext.drawImage(canvas, 0, 0, width, height);
 
-    for (var i = 0; i < array.length; i++) {
+    for (var i = 0; i < Math.min(height + 5, array.length) /*CHANGE*/; i++) {
       var value = array[i];
       canvasContext.fillStyle = this._getColor(value);
       if (this._audioEnded) {
