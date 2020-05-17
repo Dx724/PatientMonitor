@@ -145,12 +145,12 @@ class Stream extends React.Component {
 
     var analyser = this.audioCtx.createAnalyser();
     analyser.smoothingTimeConstant = 0;
-    analyser.fftSize = 2048;
+    analyser.fftSize = 256;
 
     this.audioStream.connect(this.bandpassFilter);
     this.bandpassFilter.connect(this.gainNode);
     this.gainNode.connect(analyser);
-    analyser.connect(this.audioCtx.destination);
+    this.gainNode.connect(this.audioCtx.destination);
 
     spectro.connectSource(analyser, this.audioCtx);
     spectro.start();
