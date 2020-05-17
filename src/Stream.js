@@ -74,8 +74,8 @@ class Stream extends React.Component {
       muted: false
     };
 
-    var AudioContext = window.AudioContext || window.webkitAudioContext;
-    this.audioCtx = new AudioContext();
+    this.audioCtx = this.props.audioContext;
+    console.log (this.audioCtx === null);
 
     var fStart = 750;
     var fEnd = 2800;
@@ -145,7 +145,7 @@ class Stream extends React.Component {
 
     var analyser = this.audioCtx.createAnalyser();
     analyser.smoothingTimeConstant = 0;
-    analyser.fftSize = 512;
+    analyser.fftSize = 1024;
 
     this.audioStream.connect(this.bandpassFilter);
     this.bandpassFilter.connect(this.gainNode);

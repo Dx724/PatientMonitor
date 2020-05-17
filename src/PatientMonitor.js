@@ -84,6 +84,10 @@ class PatientMonitor extends React.Component {
       this.roomAddCounter.set(this.state.dropdownList[i], 10000);
     }
 
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.audioCtx = new AudioContext();
+    console.log(this.audioCtx.sampleRate);
+
     this.onRoomAdd = this.onRoomAdd.bind(this);
     this.onRoomRemove = this.onRoomRemove.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
@@ -231,12 +235,12 @@ class PatientMonitor extends React.Component {
         </HeaderDiv>
 
         <ContainerDiv>
-          <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd} />
+          <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
           <br />
           {this.state.roomObjs.map(room => (
             <Room key={room.identifier} identifier={room.identifier} streams={room.streams} 
               addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} 
-              muteFunction={this.muteTemp} />
+              muteFunction={this.muteTemp} audioContext={this.audioCtx}/>
           ))}
           <Snackbar
             key={this.state.messageInfo ? this.state.messageInfo.key : undefined}
