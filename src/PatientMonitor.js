@@ -1,13 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Snackbar from '@material-ui/core/Snackbar';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
+import { Snackbar, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton } from '@material-ui/core';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import MuiAlert from '@material-ui/lab/Alert';
+import { withStyles } from '@material-ui/core/styles';
 import streamData from "./streamInfo.json";
 import Room from "./Room.js";
 import RoomDropdown from "./RoomDropdown.js";
@@ -27,12 +23,16 @@ const InstructionDiv = styled.div`
   margin-left: auto;
   margin-right: 8px;
   margin-top: 8px;
+  @media only screen and (max-width: 992px) {
+    margin-right: 4px;
+    margin-top: 4px;
+  }
 `;
 
 const TitleDiv = styled.div`
   text-align: center;
-  width: 30vw;
-  margin-left: 35vw;
+  width: 40vw;
+  margin-left: 30vw;
 `;
 
 const Title = styled.h2`
@@ -50,6 +50,11 @@ const RefreshButton = styled.input`
   padding: 0;
   cursor: pointer;
 `;
+
+const InfoIcon = withStyles({
+  colorPrimary: '#1976d2',
+  fontSizeLarge: '40px'
+})(InfoOutlinedIcon);
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -192,9 +197,11 @@ class PatientMonitor extends React.Component {
     this.setState({ instructionOpen: false });
   }
 
-  getDialog() {
-    return (
-      <Dialog onClose={this.handleInstructionClose} open={this.state.instructionOpen} 
+
+  render() {
+
+    let instructionDialog = (
+      <Dialog onClose={this.handleInstructionClose} open={this.state.instructionOpen}
         aria-labelledby="instruction-dialog-title">
         <DialogTitle id="instruction-dialog-title">Instructions</DialogTitle>
         <DialogContent>
@@ -202,19 +209,53 @@ class PatientMonitor extends React.Component {
             {InstructionText}
             <br />
             <br />
-            We recommend using Firefox.
-          </DialogContentText>
+              We recommend using Firefox.
+            </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={this.handleInstructionClose} color="primary" style={{ color: '#1976d2' }}>
             Close
-          </Button>
+            </Button>
         </DialogActions>
       </Dialog>
     );
-  }
 
-  render() {
+    let notificationSnackbar = (
+      <Snackbar
+        key={this.state.messageInfo ? this.state.messageInfo.key : undefined}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={this.state.snackbarOpen}
+        autoHideDuration={3000}
+        onClose={this.handleSnackbarClose}
+        onExited={this.handleSnackbarExited}
+      >
+        <Alert onClose={this.handleSnackbarClose} severity="success">
+          {this.state.messageInfo ? this.state.messageInfo.message : undefined}
+        </Alert>
+      </Snackbar>
+    );
+
+    let refreshSnackbar = (
+      <Snackbar
+        key="refreshSnackbar"
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        open={this.state.refreshOpen}
+        onClose={this.handleRefreshSnackbarClose}
+      >
+        <Alert onClose={this.handleRefreshSnackbarClose} severity="warning">
+          {"Please "}
+          <RefreshButton type="button" value="refresh" onClick={this.onRefreshClick} />
+          {" for improved performance."}
+        </Alert>
+      </Snackbar>
+    );
+
     return (
       <div>
         <HeaderDiv>
@@ -222,53 +263,24 @@ class PatientMonitor extends React.Component {
             <Title>Alarm Monitoring System</Title>
           </TitleDiv>
           <InstructionDiv>
-            <Button variant="outlined" color="primary" style={{ color: '#1976d2', borderColor: '#1976d2' }}
-              onClick={this.onInstructionClick}>
-              INSTRUCTIONS
-            </Button>
-            {this.getDialog()}
+            <IconButton aria-label="info" onClick={this.onInstructionClick} style={{ color: '#1976d2' }} size='small' >
+              <InfoOutlinedIcon style={{fontSize: '30px'}}/>
+            </IconButton>
           </InstructionDiv>
+          {instructionDialog}
         </HeaderDiv>
 
         <ContainerDiv>
-          <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd}/>
+          <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd} />
           <br />
           {this.state.roomObjs.map(room => (
-            <Room key={room.identifier} identifier={room.identifier} streams={room.streams} 
-              addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove} 
-              muteFunction={this.muteTemp} audioContext={this.audioCtx}/>
+            <Room key={room.identifier} identifier={room.identifier} streams={room.streams}
+              addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove}
+              muteFunction={this.muteTemp} audioContext={this.audioCtx} />
           ))}
-          <Snackbar
-            key={this.state.messageInfo ? this.state.messageInfo.key : undefined}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            open={this.state.snackbarOpen}
-            autoHideDuration={3000}
-            onClose={this.handleSnackbarClose}
-            onExited={this.handleSnackbarExited}
-          >
-            <Alert onClose={this.handleSnackbarClose} severity="success">
-              {this.state.messageInfo ? this.state.messageInfo.message : undefined}
-            </Alert>
-          </Snackbar>
 
-          <Snackbar
-            key="refreshSnackbar"
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            open={this.state.refreshOpen}
-            onClose={this.handleRefreshSnackbarClose}
-          >
-            <Alert onClose={this.handleRefreshSnackbarClose} severity="warning">
-              {"Please "}
-              <RefreshButton type="button" value="refresh" onClick={this.onRefreshClick} />
-              {" for improved performance."}
-            </Alert>
-          </Snackbar>
+          {notificationSnackbar}
+          {refreshSnackbar}
         </ContainerDiv>
 
       </div>

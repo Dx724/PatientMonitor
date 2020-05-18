@@ -2,11 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 //import AudioSpectrum from "react-audio-spectrum";
 import Spectrogram from './spectrogram';
-import Switch from '@material-ui/core/Switch';
-import IconButton from '@material-ui/core/IconButton';
+import { Switch, IconButton, Tooltip } from '@material-ui/core';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
-import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import TimerButton from './TimerButton.js'
 import chroma from "chroma-js";
@@ -38,14 +36,13 @@ const StreamTitle = styled.b`
 
 const SpectogramCanvas = styled.canvas`
   border-radius: 4px;
+  @media only screen and (max-width: 992px) {
+    display: none;
+  }
 `;
 
 const AudioStream = styled.audio`
   display: none;
-`;
-
-const ToggleDiv = styled.div`
-  position: relative;
 `;
 
 const BlueSwitch = withStyles({
@@ -272,10 +269,8 @@ gap={0}
         />
 
         <Tooltip title="Noise Filter" arrow>
-          <ToggleDiv>
             <BlueSwitch id={"checkbox_" + this.props.name} type="checkbox" onChange={this.onToggleChange}
               defaultChecked={true} value={this.state.toggleValue} color="primary" />
-          </ToggleDiv>
         </Tooltip>
       </StreamDiv>
     );
