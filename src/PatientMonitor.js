@@ -51,11 +51,6 @@ const RefreshButton = styled.input`
   cursor: pointer;
 `;
 
-const InfoIcon = withStyles({
-  colorPrimary: '#1976d2',
-  fontSizeLarge: '40px'
-})(InfoOutlinedIcon);
-
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }

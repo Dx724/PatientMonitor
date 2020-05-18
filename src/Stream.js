@@ -117,7 +117,7 @@ class Stream extends React.Component {
 
     this.spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
       canvas: {
-        width: 225,
+        width: 250,
         height: 80
       },
       audio: {
