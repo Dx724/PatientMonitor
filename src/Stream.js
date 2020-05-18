@@ -36,9 +36,9 @@ const StreamTitle = styled.b`
 
 const SpectogramCanvas = styled.canvas`
   border-radius: 4px;
-  @media only screen and (max-width: 992px) {
+  /*@media only screen and (max-width: 992px) {
     display: none;
-  }
+  }*/
 `;
 
 const AudioStream = styled.audio`
