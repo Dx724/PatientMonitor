@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Desktop, MobileAndTablet } from "react-responsive-simple";
 
 class RoomDropdown extends React.Component {
   constructor(props) {
@@ -33,6 +35,8 @@ class RoomDropdown extends React.Component {
 
   render() {
     return (
+      <>
+      <Desktop>
       <div>
         <FormControl style={{ minWidth: 120 }}>
           <InputLabel /*htmlFor="roomSelector"*/ id="select-label">Rooms </InputLabel>
@@ -43,6 +47,22 @@ class RoomDropdown extends React.Component {
           </Select>
         </FormControl>
       </div>
+      </Desktop>
+
+      <MobileAndTablet>
+        <div>
+        <FormControl style={{ minWidth: 120 }}>
+          <InputLabel htmlFor="roomSelectorMobile" id="select-label-mobile">Rooms </InputLabel>
+          <NativeSelect id="roomSelectorMobile" labelId="select-label-mobile" value={'default'} onChange={this.onChange}>
+            <option value={'default'}>---</option>
+            {this.props.options.map(option => (
+              <option key={option} value={option}>{option}</option>
+            ))}
+          </NativeSelect>
+        </FormControl>
+        </div>
+      </MobileAndTablet>
+      </>
     );
   }
 }

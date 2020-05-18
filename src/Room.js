@@ -10,6 +10,10 @@ const RoomDiv = styled.div`
   width: 46vw;
   margin: 5px;
   padding: 1vw;
+  @media only screen and (max-width: 992px) {
+    width: 90vw;
+    padding: 3vw;
+  }
 `;
 
 class Room extends React.Component {
