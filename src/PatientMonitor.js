@@ -6,9 +6,16 @@ import MuiAlert from '@material-ui/lab/Alert';
 import streamData from "./streamInfo.json";
 import Room from "./Room.js";
 import RoomDropdown from "./RoomDropdown.js";
+import ColumbiaLogo from "./resources/Columbia_University_Logo-white.png";
+
+const PageContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+`;
 
 const ContainerDiv = styled.div`
   text-align: center;
+  padding-bottom: 9vh;
 `;
 
 const HeaderDiv = styled.div`
@@ -48,6 +55,23 @@ const RefreshButton = styled.input`
   font-weight: 500;
   padding: 0;
   cursor: pointer;
+`;
+
+const Footer = styled.div`
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  background-color: #022169;
+  width: 100%;
+  height: 7vh;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+const Logo = styled.img`
+  height: 4vh;
+  width: auto;
+  padding-right: 5px;
 `;
 
 function Alert(props) {
@@ -251,7 +275,7 @@ class PatientMonitor extends React.Component {
     );
 
     return (
-      <div>
+      <PageContainer>
         <HeaderDiv>
           <TitleDiv>
             <Title>Alarm Monitoring System</Title>
@@ -272,12 +296,16 @@ class PatientMonitor extends React.Component {
               addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove}
               muteFunction={this.muteTemp} audioContext={this.audioCtx} />
           ))}
-
+          
           {notificationSnackbar}
           {refreshSnackbar}
         </ContainerDiv>
 
-      </div>
+        <Footer>
+            <Logo src={ColumbiaLogo} alt="Columbia Logo" />;
+        </Footer>
+
+      </PageContainer>
     );
   }
 }
