@@ -157,12 +157,11 @@ class Stream extends React.Component {
     if (this.audioCtx.state === 'suspended') {
       this.audioCtx.resume();
     }
-    console.log("stream mounted");
+    //console.log("stream mounted");
   }
 
   componentWillUnmount() {
-    //this.audioCtx.close();
-    console.log("stream unmounted");
+    //console.log("stream unmounted");
   }
 
   cleanUp() {
@@ -234,7 +233,7 @@ gap={0}
 />*/
 
   render() {
-    console.log(this.props.name + "stream rendered");
+    //(this.props.name + "stream rendered");
     let soloButton;
     let icon;
 

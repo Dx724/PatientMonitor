@@ -41,15 +41,15 @@ class Room extends React.Component {
   }
 
   componentDidMount() {
-    console.log("mounted");
+    //console.log("mounted");
   }
 
   componentWillUnmount() {
-    console.log("unmounted");
+    //console.log("unmounted");
   }
 
   render() {
-    console.log("render");
+    //console.log("render");
     return (
       <RoomDiv>
         <h3 className="roomTitle">{this.props.identifier}</h3>
