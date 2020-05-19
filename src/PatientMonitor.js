@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Snackbar, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import MuiAlert from '@material-ui/lab/Alert';
-import { withStyles } from '@material-ui/core/styles';
 import streamData from "./streamInfo.json";
 import Room from "./Room.js";
 import RoomDropdown from "./RoomDropdown.js";
