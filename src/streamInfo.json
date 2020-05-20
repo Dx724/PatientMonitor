@@ -55,7 +55,7 @@
       "identifier": "room126",
       "streams": [
         {
-          "name": "ALarm3",
+          "name": "Alarm3",
           "streamLink": "https://alarmtest.ceec.echem.io/alarm"
         },
         {
