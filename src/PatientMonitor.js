@@ -302,7 +302,7 @@ class PatientMonitor extends React.Component {
         </ContainerDiv>
 
         <Footer>
-            <Logo src={ColumbiaLogo} alt="Columbia Logo" />;
+            <Logo src={ColumbiaLogo} alt="Columbia Logo" />
         </Footer>
 
       </PageContainer>
