@@ -86,7 +86,7 @@ const InstructionText = "Use the select menu to add rooms. Clicking the volume i
   "other streams for 15 seconds. Clicking it again during the 15 second period will unmute all streams. " +
   "The toggle turns the background noise filter on and off.";
 
-var soloTimeout = null;
+//var soloTimeout = null;
 
 class PatientMonitor extends React.Component {
   constructor(props) {
@@ -103,6 +103,7 @@ class PatientMonitor extends React.Component {
     };
 
     this.roomAddCounter = new Map();
+    this.soloTimeout = null;
 
     for (var i = 0; i < this.state.dropdownList.length; i++) {
       this.roomAddCounter.set(this.state.dropdownList[i], 10000);
@@ -111,15 +112,18 @@ class PatientMonitor extends React.Component {
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
 
+    this.incrementRoomAddCounter = this.incrementRoomAddCounter.bind(this);
     this.onRoomAdd = this.onRoomAdd.bind(this);
     this.onRoomRemove = this.onRoomRemove.bind(this);
+    this.muteTemp = this.muteTemp.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.handleSnackbarExited = this.handleSnackbarExited.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
     this.handleRefreshSnackbarClose = this.handleRefreshSnackbarClose.bind(this);
-    this.handleSnackbarExited = this.handleSnackbarExited.bind(this);
+    this.onRefreshClick = this.onRefreshClick.bind(this);
     this.onInstructionClick = this.onInstructionClick.bind(this);
-    this.handleInstructionClose = this.handleInstructionClose.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleInstructionClose = this.handleInstructionClose.bind(this);    
   }
 
   incrementRoomAddCounter(roomIdentifier) {
@@ -152,10 +156,10 @@ class PatientMonitor extends React.Component {
       stream.muted = mute;
     }
 
-    clearTimeout(soloTimeout);
+    clearTimeout(this.soloTimeout);
 
     if (mute) {
-      soloTimeout = setTimeout(() => {
+      this.soloTimeout = setTimeout(() => {
         for (let stream of document.getElementsByClassName("stream")) {
           stream.muted = false;
         }
@@ -215,9 +219,7 @@ class PatientMonitor extends React.Component {
     this.setState({ instructionOpen: false });
   }
 
-
   render() {
-
     let instructionDialog = (
       <Dialog onClose={this.handleInstructionClose} open={this.state.instructionOpen}
         aria-labelledby="instruction-dialog-title">

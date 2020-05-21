@@ -264,7 +264,7 @@
   };
 
   Spectrogram.prototype._getColor = function (index) {
-    var color = this._colors[index >> 0];
+    var color = this._colors[index]; // TODO remove bit shift??
 
     if (typeof color === 'undefined') {
       color = this._colors[0];
