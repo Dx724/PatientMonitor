@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/PatientMonitor/static/css/main.ed619b46.chunk.css",
-    "main.js": "/PatientMonitor/static/js/main.50e64fdf.chunk.js",
+    "main.css": "/PatientMonitor/static/css/main.9eda5c25.chunk.css",
+    "main.js": "/PatientMonitor/static/js/main.de30b29b.chunk.js",
     "runtime-main.js": "/PatientMonitor/static/js/runtime-main.e1a9f678.js",
-    "static/js/2.6d6d14da.chunk.js": "/PatientMonitor/static/js/2.6d6d14da.chunk.js",
+    "static/js/2.247ae920.chunk.js": "/PatientMonitor/static/js/2.247ae920.chunk.js",
     "index.html": "/PatientMonitor/index.html",
-    "precache-manifest.bd73c4b3a11d0737741448238abf3593.js": "/PatientMonitor/precache-manifest.bd73c4b3a11d0737741448238abf3593.js",
+    "precache-manifest.10527964904fe738162270eedd044110.js": "/PatientMonitor/precache-manifest.10527964904fe738162270eedd044110.js",
     "service-worker.js": "/PatientMonitor/service-worker.js",
-    "static/js/2.6d6d14da.chunk.js.LICENSE.txt": "/PatientMonitor/static/js/2.6d6d14da.chunk.js.LICENSE.txt",
+    "static/js/2.247ae920.chunk.js.LICENSE.txt": "/PatientMonitor/static/js/2.247ae920.chunk.js.LICENSE.txt",
     "static/media/Columbia_University_Logo-white.png": "/PatientMonitor/static/media/Columbia_University_Logo-white.0f48c6df.png",
     "static/media/index.css": "/PatientMonitor/static/media/roboto-v20-latin-ext_latin-regular.d679a906.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.e1a9f678.js",
-    "static/js/2.6d6d14da.chunk.js",
-    "static/css/main.ed619b46.chunk.css",
-    "static/js/main.50e64fdf.chunk.js"
+    "static/js/2.247ae920.chunk.js",
+    "static/css/main.9eda5c25.chunk.css",
+    "static/js/main.de30b29b.chunk.js"
   ]
 }
