@@ -86,11 +86,10 @@ const mutePeriod = 15 * 1000;
 const initialRefreshPeriod = 60 * 60 * 1000;
 const refreshInterval = 60 * 60 * 1000;
 
-const InstructionText = "Use the select menu to add rooms. Clicking the volume indicator will mute all " +
+const InstructionText = "Use the select menu to add rooms. Clicking the volume indicator for a specific stream will mute all " +
   "other streams for 15 seconds. Clicking it again during the 15 second period will unmute all streams. " +
-  "The toggle turns the background noise filter on and off.";
-
-//var soloTimeout = null;
+  "The toggle turns the background noise filter on and off for its respective stream. The indicator next to the spectrogram " +
+  "corresponds to a loud noise at a frequency of 1kHz.";
 
 class PatientMonitor extends React.Component {
   constructor(props) {

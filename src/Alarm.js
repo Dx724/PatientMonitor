@@ -7,7 +7,21 @@ const Blinker = styled.span`
   background-color: ${props => props.alarm ? "red" : "#bbb"};
   border-radius: 50%;
   display: inline-block;
+`;
+
+const AlarmDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  margin-top: 14px;
   margin-left: 3px;
+  text-align: center;
+`;
+
+const FrequencyText = styled.p`
+  margin-top: 2px;
+  margin-bottom: 0;
 `;
 
 const AlarmTimeout = 0.5 * 1000;
@@ -70,7 +84,10 @@ class Alarm extends React.Component {
 
   render() {
     return (
-      <Blinker alarm={this.state.alarmHeard} />
+      <AlarmDiv>
+        <Blinker alarm={this.state.alarmHeard} />
+        <FrequencyText>1kHz</FrequencyText>
+      </AlarmDiv>
     );
   }
 }
