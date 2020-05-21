@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Snackbar, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import MuiAlert from '@material-ui/lab/Alert';
+import { detect } from 'detect-browser';
 import streamData from "./streamInfo.json";
 import Room from "./Room.js";
 import RoomDropdown from "./RoomDropdown.js";
@@ -101,6 +102,14 @@ class PatientMonitor extends React.Component {
       messageInfo: undefined,
       instructionOpen: false
     };
+
+    const browser = detect();
+    this.notSupportedOpen = false;
+
+    if (browser.name === 'safari' || browser.name === 'ios') {
+      this.notSupportedOpen = true;
+      console.log("Safari is not supporeted");
+    }
 
     this.roomAddCounter = new Map();
 
@@ -223,7 +232,7 @@ class PatientMonitor extends React.Component {
         aria-labelledby="instruction-dialog-title">
         <DialogTitle id="instruction-dialog-title">Instructions</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id="instruction-dialog-description">
             {InstructionText}
             <br />
             <br />
@@ -233,8 +242,19 @@ class PatientMonitor extends React.Component {
         <DialogActions>
           <Button autoFocus onClick={this.handleInstructionClose} color="primary" style={{ color: '#1976d2' }}>
             Close
-            </Button>
+          </Button>
         </DialogActions>
+      </Dialog>
+    );
+
+    let notSupportedDialog = (
+      <Dialog open={this.notSupportedOpen} aria-labelledby="notSupported-dialog-title" disableBackdropClick={true} disableEscapeKeyDown={true}>
+        <DialogTitle id="notSupported-dialog-title">Not Supported</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="notSupported-dialog-description">
+            Unfortunately, Safari is not supported at this time. Please switch to Firefox or Google Chrome.
+          </DialogContentText>
+        </DialogContent>
       </Dialog>
     );
 
@@ -276,6 +296,7 @@ class PatientMonitor extends React.Component {
 
     return (
       <PageContainer>
+        {notSupportedDialog}
         <HeaderDiv>
           <TitleDiv>
             <Title>Alarm Monitoring System</Title>
