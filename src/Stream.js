@@ -6,8 +6,9 @@ import { Switch, IconButton, Tooltip } from '@material-ui/core';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
 import { withStyles } from '@material-ui/core/styles';
-import TimerButton from './TimerButton.js'
 import chroma from "chroma-js";
+import TimerButton from './TimerButton.js';
+import Alarm from './Alarm.js';
 
 const StreamDiv = styled.div`
   background-color: lightsteelblue;
@@ -60,6 +61,7 @@ const BlueSwitch = withStyles({
   track: {},
 })(Switch);
 
+const canvasHeight = 80;
 var soloTimeout = null;
 
 class Stream extends React.Component {
@@ -88,6 +90,12 @@ class Stream extends React.Component {
     this.gainNode = this.audioCtx.createGain();
     this.gainNode.gain.value = 1;
 
+    this.analyser = this.audioCtx.createAnalyser();
+    this.analyser.smoothingTimeConstant = 0;
+    this.analyser.fftSize = 1024;
+
+    this.alarmRef = React.createRef();
+
     this.onSoloClick = this.onSoloClick.bind(this);
     this.onToggleChange = this.onToggleChange.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
@@ -101,16 +109,10 @@ class Stream extends React.Component {
     this.audioElement = document.getElementById("audio_" + this.props.name);
 
     this.audioElement.addEventListener('volumechange', () => {
-      if (this.audioElement.muted) {
-        if (this.state.solo) {
-          this.setState({ solo: false });
-        }
-        this.setState({ muted: true });
+      if (this.audioElement.muted && this.state.solo) {
+        this.setState({ solo: false });
       }
-      else {
-        this.setState({ muted: false });
-      }
-
+      this.setState({ muted: this.audioElement.muted })
     }, false);
 
     this.audioStream = this.audioCtx.createMediaElementSource(this.audioElement);
@@ -118,7 +120,7 @@ class Stream extends React.Component {
     this.spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
       canvas: {
         width: 250,
-        height: 80
+        height: canvasHeight
       },
       audio: {
         enable: true
@@ -141,17 +143,12 @@ class Stream extends React.Component {
       }
     });
 
-
-    var analyser = this.audioCtx.createAnalyser();
-    analyser.smoothingTimeConstant = 0;
-    analyser.fftSize = 1024;
-
     this.audioStream.connect(this.bandpassFilter);
     this.bandpassFilter.connect(this.gainNode);
-    this.gainNode.connect(analyser);
+    this.gainNode.connect(this.analyser);
     this.gainNode.connect(this.audioCtx.destination);
 
-    this.spectro.connectSource(analyser, this.audioCtx);
+    this.spectro.connectSource(this.analyser, this.audioCtx);
     this.spectro.start();
 
     if (this.audioCtx.state === 'suspended') {
@@ -167,6 +164,7 @@ class Stream extends React.Component {
   cleanUp() {
     clearTimeout(soloTimeout);
     this.spectro.forceStop();
+    this.alarmRef.current.stop();
     this.audioElement.removeAttribute("src");
     this.audioElement.load();
     return this.state.solo;
@@ -175,19 +173,16 @@ class Stream extends React.Component {
   onSoloClick(event) {
     event.preventDefault();
 
+    clearTimeout(soloTimeout);
     if (!this.state.solo) {
       this.props.muteFunction(true);
       document.getElementById("audio_" + this.props.name).muted = false;
       this.setState({ solo: true, muted: false });
-      var self = this;
-
-      clearTimeout(soloTimeout);
       soloTimeout = setTimeout(() => {
-        self.setState({ solo: false });
+        this.setState({ solo: false });
       }, 15 * 1000);
     }
     else {
-      clearTimeout(soloTimeout);
       this.setState({ solo: false, muted: false });
       this.props.muteFunction(false);
     }
@@ -263,13 +258,14 @@ gap={0}
           </StreamTitle>
         </StreamTitleDiv>
         <SpectogramCanvas id={"audio_canvas_" + this.props.name} />
-        <AudioStream crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name} 
-          autoPlay src={this.props.streamLink} 
+        <AudioStream crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name}
+          autoPlay src={this.props.streamLink}
         />
 
+        <Alarm ref={this.alarmRef} analyser={this.analyser} canvasHeight={canvasHeight} />
         <Tooltip title="Noise Filter" arrow>
-            <BlueSwitch id={"checkbox_" + this.props.name} type="checkbox" onChange={this.onToggleChange}
-              defaultChecked={true} value={this.state.toggleValue} color="primary" />
+          <BlueSwitch id={"checkbox_" + this.props.name} type="checkbox" onChange={this.onToggleChange}
+            defaultChecked={true} value={this.state.toggleValue} color="primary" />
         </Tooltip>
       </StreamDiv>
     );
