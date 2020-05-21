@@ -30,20 +30,17 @@ class RoomDropdown extends React.Component {
     return (
       <>
         <Desktop>
-          <div>
             <FormControl style={{ minWidth: 120 }}>
-              <InputLabel /*htmlFor="roomSelector"*/ id="select-label">Rooms </InputLabel>
+              <InputLabel id="select-label">Rooms </InputLabel>
               <Select id="roomSelector" labelId="select-label" value={''} onChange={this.onChange}>
                 {this.props.options.map(option => (
                   <MenuItem key={option} value={option}>{option}</MenuItem>
                 ))}
               </Select>
             </FormControl>
-          </div>
         </Desktop>
 
         <MobileAndTablet>
-          <div>
             <FormControl style={{ minWidth: 120 }}>
               <InputLabel htmlFor="roomSelectorMobile" id="select-label-mobile">Rooms </InputLabel>
               <NativeSelect id="roomSelectorMobile" value={'default'} onChange={this.onChange}>
@@ -53,7 +50,6 @@ class RoomDropdown extends React.Component {
                 ))}
               </NativeSelect>
             </FormControl>
-          </div>
         </MobileAndTablet>
       </>
     );

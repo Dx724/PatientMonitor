@@ -18,6 +18,10 @@ const ContainerDiv = styled.div`
   padding-bottom: 9vh;
 `;
 
+const DropdownMenuDiv = styled.div`
+  margin-bottom: 18px;
+`;
+
 const HeaderDiv = styled.div`
   display: flex;
   margin: 0;
@@ -291,8 +295,9 @@ class PatientMonitor extends React.Component {
         </HeaderDiv>
 
         <ContainerDiv>
-          <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd} />
-          <br />
+          <DropdownMenuDiv>
+            <RoomDropdown options={this.state.dropdownList} changeHandler={this.onRoomAdd} />
+          </DropdownMenuDiv>
           {this.state.roomObjs.map(room => (
             <Room key={room.identifier} identifier={room.identifier} streams={room.streams}
               addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove}
