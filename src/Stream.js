@@ -6,7 +6,8 @@ import { Switch, IconButton, Tooltip } from '@material-ui/core';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
 import { withStyles } from '@material-ui/core/styles';
-import TimerButton from './TimerButton.js'
+import TimerButton from './TimerButton.js';
+import Alarm from './Alarm.js';
 import chroma from "chroma-js";
 
 const StreamDiv = styled.div`
@@ -60,7 +61,7 @@ const BlueSwitch = withStyles({
   track: {},
 })(Switch);
 
-var soloTimeout = null;
+const canvasHeight = 80;
 
 class Stream extends React.Component {
   constructor(props) {
@@ -87,6 +88,13 @@ class Stream extends React.Component {
 
     this.gainNode = this.audioCtx.createGain();
     this.gainNode.gain.value = 1;
+
+    this.analyser = this.audioCtx.createAnalyser();
+    this.analyser.smoothingTimeConstant = 0;
+    this.analyser.fftSize = 1024;
+
+    this.soloTimeout = null;
+    this.alarmRef = React.createRef();
 
     this.onSoloClick = this.onSoloClick.bind(this);
     this.onToggleChange = this.onToggleChange.bind(this);
@@ -118,7 +126,7 @@ class Stream extends React.Component {
     this.spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
       canvas: {
         width: 250,
-        height: 80
+        height: canvasHeight
       },
       audio: {
         enable: true
@@ -142,16 +150,12 @@ class Stream extends React.Component {
     });
 
 
-    var analyser = this.audioCtx.createAnalyser();
-    analyser.smoothingTimeConstant = 0;
-    analyser.fftSize = 1024;
-
     this.audioStream.connect(this.bandpassFilter);
     this.bandpassFilter.connect(this.gainNode);
-    this.gainNode.connect(analyser);
+    this.gainNode.connect(this.analyser);
     this.gainNode.connect(this.audioCtx.destination);
 
-    this.spectro.connectSource(analyser, this.audioCtx);
+    this.spectro.connectSource(this.analyser, this.audioCtx);
     this.spectro.start();
 
     if (this.audioCtx.state === 'suspended') {
@@ -165,8 +169,9 @@ class Stream extends React.Component {
   }
 
   cleanUp() {
-    clearTimeout(soloTimeout);
+    clearTimeout(this.soloTimeout);
     this.spectro.forceStop();
+    this.alarmRef.current.stop();
     this.audioElement.removeAttribute("src");
     this.audioElement.load();
     return this.state.solo;
@@ -181,13 +186,13 @@ class Stream extends React.Component {
       this.setState({ solo: true, muted: false });
       var self = this;
 
-      clearTimeout(soloTimeout);
-      soloTimeout = setTimeout(() => {
+      clearTimeout(this.soloTimeout);
+      this.soloTimeout = setTimeout(() => {
         self.setState({ solo: false });
       }, 15 * 1000);
     }
     else {
-      clearTimeout(soloTimeout);
+      clearTimeout(this.soloTimeout);
       this.setState({ solo: false, muted: false });
       this.props.muteFunction(false);
     }
@@ -267,6 +272,7 @@ gap={0}
           autoPlay src={this.props.streamLink} 
         />
 
+        <Alarm ref={this.alarmRef} analyser={this.analyser} canvasHeight={canvasHeight}/>
         <Tooltip title="Noise Filter" arrow>
             <BlueSwitch id={"checkbox_" + this.props.name} type="checkbox" onChange={this.onToggleChange}
               defaultChecked={true} value={this.state.toggleValue} color="primary" />
