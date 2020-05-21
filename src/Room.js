@@ -17,6 +17,10 @@ const RoomDiv = styled.div`
   }
 `;
 
+const ButtonDiv = styled.div`
+  margin-top: 18px;
+`;
+
 class Room extends React.Component {
   constructor(props) {
     super(props);
@@ -59,11 +63,12 @@ class Room extends React.Component {
             ref={ref => { this.streamRefs[i] = ref; }
           }/>
         ))}
-        <br />
-        <Button variant="contained" color="primary" onClick={this.onRemoveClick} style={{ background: '#1976d2' }}
-          startIcon={<CloseIcon fontSize="small" />}>
-          Remove
-        </Button>
+        <ButtonDiv>
+          <Button variant="contained" color="primary" onClick={this.onRemoveClick} style={{ background: '#1976d2' }}
+            startIcon={<CloseIcon fontSize="small" />}>
+            Remove
+          </Button>
+        </ButtonDiv>
       </RoomDiv>
     );
   }
