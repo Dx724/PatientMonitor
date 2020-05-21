@@ -59,9 +59,9 @@ class Room extends React.Component {
         <h3 className="roomTitle">{this.props.identifier}</h3>
         {this.props.streams.map((stream, i) => (
           <Stream key={stream.name} name={stream.name} streamLink={stream.streamLink/*this.streamProxy(stream)*/} /*Uncomment left for proxy*/
-            muteFunction={this.props.muteFunction} audioContext={this.props.audioContext} 
-            ref={ref => { this.streamRefs[i] = ref; }
-          }/>
+            muteFunction={this.props.muteFunction} audioContext={this.props.audioContext}
+            ref={ref => { this.streamRefs[i] = ref; }}
+          />
         ))}
         <ButtonDiv>
           <Button variant="contained" color="primary" onClick={this.onRemoveClick} style={{ background: '#1976d2' }}

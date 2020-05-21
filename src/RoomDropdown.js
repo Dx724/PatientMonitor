@@ -26,8 +26,6 @@ class RoomDropdown extends React.Component {
     this.setState({ open: false });
   };
 
-  //Use NativeSelect for mobile
-
   render() {
     return (
       <>

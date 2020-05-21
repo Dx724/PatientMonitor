@@ -123,7 +123,7 @@ class PatientMonitor extends React.Component {
     this.handleRefreshSnackbarClose = this.handleRefreshSnackbarClose.bind(this);
     this.onRefreshClick = this.onRefreshClick.bind(this);
     this.onInstructionClick = this.onInstructionClick.bind(this);
-    this.handleInstructionClose = this.handleInstructionClose.bind(this);    
+    this.handleInstructionClose = this.handleInstructionClose.bind(this);
   }
 
   incrementRoomAddCounter(roomIdentifier) {
@@ -284,7 +284,7 @@ class PatientMonitor extends React.Component {
           </TitleDiv>
           <InstructionDiv>
             <IconButton aria-label="info" onClick={this.onInstructionClick} style={{ color: '#1976d2' }} size='small' >
-              <InfoOutlinedIcon style={{fontSize: '30px'}}/>
+              <InfoOutlinedIcon style={{ fontSize: '30px' }} />
             </IconButton>
           </InstructionDiv>
           {instructionDialog}
@@ -298,13 +298,13 @@ class PatientMonitor extends React.Component {
               addCounter={this.roomAddCounter.get(room.identifier)} onRemoveClick={this.onRoomRemove}
               muteFunction={this.muteTemp} audioContext={this.audioCtx} />
           ))}
-          
+
           {notificationSnackbar}
           {refreshSnackbar}
         </ContainerDiv>
 
         <Footer>
-            <Logo src={ColumbiaLogo} alt="Columbia Logo" />
+          <Logo src={ColumbiaLogo} alt="Columbia Logo" />
         </Footer>
 
       </PageContainer>

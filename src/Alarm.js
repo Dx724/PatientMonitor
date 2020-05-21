@@ -20,7 +20,7 @@ class Alarm extends React.Component {
     this.state = {
       alarmHeard: false
     }
-    
+
     this.stopped = false;
     this.alarmTimer = null;
 
@@ -55,7 +55,7 @@ class Alarm extends React.Component {
       if (alarm) {
         clearTimeout(this.alarmTimer);
         this.setState({ alarmHeard: true });
-        this.alarmTimer = setTimeout( () => {
+        this.alarmTimer = setTimeout(() => {
           console.log("timeout");
           this.setState({ alarmHeard: false });
         }, AlarmTimeout);
@@ -70,7 +70,7 @@ class Alarm extends React.Component {
 
   render() {
     return (
-      <Blinker alarm={this.state.alarmHeard}/>
+      <Blinker alarm={this.state.alarmHeard} />
     );
   }
 }
