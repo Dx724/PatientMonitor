@@ -70,7 +70,6 @@ class Alarm extends React.Component {
         clearTimeout(this.alarmTimer);
         this.setState({ alarmHeard: true });
         this.alarmTimer = setTimeout(() => {
-          console.log("timeout");
           this.setState({ alarmHeard: false });
         }, AlarmTimeout);
       }
