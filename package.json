@@ -22,6 +22,7 @@
     "@testing-library/user-event": "^7.1.2",
     "chroma-js": "^2.1.0",
     "detect-browser": "^5.1.0",
+    "electron-is-dev": "^1.2.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-responsive-simple": "^0.1.2",
@@ -37,7 +38,7 @@
     "deploy": "gh-pages -d build",
     "electron": "electron .",
     "electron-dev": "concurrently \"BROWSER=none npm run start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js --win",
     "preelectron-pack": "npm run build"
   },
   "eslintConfig": {
@@ -61,7 +62,6 @@
     "concurrently": "^5.2.0",
     "electron": "^9.0.0",
     "electron-builder": "^22.7.0",
-    "electron-is-dev": "^1.2.0",
     "gh-pages": "^2.2.0",
     "wait-on": "^5.0.0",
     "http-server": "^0.12.3"

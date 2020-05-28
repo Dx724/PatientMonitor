@@ -3,13 +3,16 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 
+app.commandLine.appendSwitch('ignore-connections-limit', 'alarmtest.ceec.echem.io');
+
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      devTools: false
     }
   })
 
@@ -24,7 +27,6 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  app.commandLine.appendSwitch('ignore-connection-limit', 'https://alarmtest.ceec.echem.io');
   createWindow();
 
   app.on('activate', function () {
