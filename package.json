@@ -38,7 +38,8 @@
     "deploy": "gh-pages -d build",
     "electron": "electron .",
     "electron-dev": "concurrently \"BROWSER=none npm run start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js --win",
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js --win --x64",
+    "electron-build": "electron-builder build -w",
     "preelectron-pack": "npm run build"
   },
   "eslintConfig": {
@@ -61,9 +62,10 @@
   "devDependencies": {
     "concurrently": "^5.2.0",
     "electron": "^9.0.0",
-    "electron-builder": "^22.7.0",
+    "electron-builder": "^21.2.0",
+    "electron-builder-squirrel-windows": "^22.7.0",
     "gh-pages": "^2.2.0",
-    "wait-on": "^5.0.0",
-    "http-server": "^0.12.3"
+    "http-server": "^0.12.3",
+    "wait-on": "^5.0.0"
   }
 }
