@@ -39,7 +39,7 @@
     "electron": "electron .",
     "electron-dev": "concurrently \"BROWSER=none npm run start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js --win --x64",
-    "electron-build": "electron-builder build -w",
+    "electron-build": "electron-builder build",
     "preelectron-pack": "npm run build"
   },
   "eslintConfig": {
