@@ -129,8 +129,7 @@ class Stream extends React.Component {
         var baseColors = [[0, 0, 255, 1], [0, 255, 255, 1], [0, 255, 0, 1], [255, 255, 0, 1], [255, 0, 0, 1]];
         var positions = [0, 0.15, 0.30, 0.50, 0.75];
 
-        var scale = new chroma.scale(baseColors, positions)
-          .domain([0, steps]);
+        var scale = new chroma.scale(baseColors, positions).domain([0, steps]);
 
         var colors = [];
 
