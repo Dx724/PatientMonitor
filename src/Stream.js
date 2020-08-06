@@ -258,7 +258,7 @@ gap={0}
         </StreamTitleDiv>
         <SpectogramCanvas id={"audio_canvas_" + this.props.name} />
         <AudioStream crossOrigin="anonymous" className="stream" id={"audio_" + this.props.name}
-          autoPlay src={this.props.streamLink}
+          autoPlay src={this.props.streamLink} loop
         />
 
         <Alarm ref={this.alarmRef} analyser={this.analyser} canvasHeight={canvasHeight} />

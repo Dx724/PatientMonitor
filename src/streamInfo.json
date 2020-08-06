@@ -1,70 +1,53 @@
 {
   "rooms": [
     {
-      "identifier": "room123",
+      "identifier": "Room 123",
       "streams": [
         {
-          "name": "RaspberryPi",
-          "streamLink": "http://192.168.2.65:8000/livemic"
+          "name": "Patient A",
+          "streamLink": "http://www.columbia.edu/~tz2294/covid/sigma_pump_neg_pressure.m4a"
         },
         {
-          "name": "Alarm1",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Patient B",
+          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump.m4a"
         },
         {
-          "name": "Livemic1",
-          "streamLink": "https://alarmtest.ceec.echem.io/livemic"
+          "name": "Patient C",
+          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump_extra_recording.m4a"
         }
       ]
     },
     {
-      "identifier": "room124",
+      "identifier": "Room 124",
       "streams": [
         {
-          "name": "Alarm",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Patient X",
+          "streamLink": "http://www.columbia.edu/~tz2294/covid/sigma_pump_neg_pressure.m4a"
         },
         {
-          "name": "Livemic",
-          "streamLink": "https://alarmtest.ceec.echem.io/livemic"
+          "name": "Patient Y",
+          "streamLink": "http://www.columbia.edu/~tz2294/covid/neg_pressure_Hepa_filter.m4a"
         },
         {
-          "name": "Test_1",
-          "streamLink": "https://alarmtest.ceec.echem.io/test_1"
+          "name": "Patient Z",
+          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump.m4a"
         }
       ]
     },
     {
-      "identifier": "room125",
+      "identifier": "Room 125",
       "streams": [
         {
-          "name": "Alarm2",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
+          "name": "Patient D",
+          "streamLink": "http://www.columbia.edu/~tz2294/covid/sigma_pump_neg_pressure.m4a"
         },
         {
-          "name": "Livemic2",
-          "streamLink": "https://alarmtest.ceec.echem.io/livemic"
+          "name": "Patient E",
+          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump.m4a"
         },
         {
-          "name": "Test12",
-          "streamLink": "https://alarmtest.ceec.echem.io/test_1"
-        }
-      ]
-    },
-    {
-      "identifier": "room126",
-      "streams": [
-        {
-          "name": "Alarm3",
-          "streamLink": "https://alarmtest.ceec.echem.io/alarm"
-        },
-        {
-          "name": "Livemic3",
-          "streamLink": "https://alarmtest.ceec.echem.io/livemic"
-        },
-        {
-          "name": "Test13",
-          "streamLink": "https://alarmtest.ceec.echem.io/test_1"
+          "name": "Patient F",
+          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump_extra_recording.m4a"
         }
       ]
     }
