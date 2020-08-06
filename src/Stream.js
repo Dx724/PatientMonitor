@@ -115,6 +115,11 @@ class Stream extends React.Component {
       this.setState({ muted: this.audioElement.muted })
     }, false);
 
+    this.audioElement.onerror = (event) => {
+      console.log("Error loading audio stream from " + this.audioElement.getAttribute('src') + ". " + this.audioElement.error.message + this.audioElement.error.code
+      + this.audioElement.error.type)
+    }
+
     this.audioStream = this.audioCtx.createMediaElementSource(this.audioElement);
 
     this.spectro = Spectrogram(document.getElementById("audio_canvas_" + this.props.name), {
