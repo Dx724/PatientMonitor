@@ -5,15 +5,15 @@
       "streams": [
         {
           "name": "Patient A",
-          "streamLink": "http://www.columbia.edu/~tz2294/covid/sigma_pump_neg_pressure.m4a"
+          "streamLink": "https://raw.githubusercontent.com/Dx724/PatientMonitor/test/demo/alarm_sound_files/sigma_pump_with_neg_pressure.m4a"
         },
         {
           "name": "Patient B",
-          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump.m4a"
+          "streamLink": "https://raw.githubusercontent.com/Dx724/PatientMonitor/test/demo/alarm_sound_files/Sigma_pump.m4a"
         },
         {
           "name": "Patient C",
-          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump_extra_recording.m4a"
+          "streamLink": "https://raw.githubusercontent.com/Dx724/PatientMonitor/test/demo/alarm_sound_files/Sigma_pump_extra_recording.m4a"
         }
       ]
     },
@@ -22,15 +22,15 @@
       "streams": [
         {
           "name": "Patient X",
-          "streamLink": "http://www.columbia.edu/~tz2294/covid/sigma_pump_neg_pressure.m4a"
+          "streamLink": "https://raw.githubusercontent.com/Dx724/PatientMonitor/test/demo/alarm_sound_files/sigma_pump_with_neg_pressure.m4a"
         },
         {
           "name": "Patient Y",
-          "streamLink": "http://www.columbia.edu/~tz2294/covid/neg_pressure_Hepa_filter.m4a"
+          "streamLink": "https://raw.githubusercontent.com/Dx724/PatientMonitor/test/demo/alarm_sound_files/neg_pressure_Hepa_filter.m4a"
         },
         {
           "name": "Patient Z",
-          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump.m4a"
+          "streamLink": "https://raw.githubusercontent.com/Dx724/PatientMonitor/test/demo/alarm_sound_files/Sigma_pump.m4a"
         }
       ]
     },
@@ -39,15 +39,15 @@
       "streams": [
         {
           "name": "Patient D",
-          "streamLink": "http://www.columbia.edu/~tz2294/covid/sigma_pump_neg_pressure.m4a"
+          "streamLink": "https://raw.githubusercontent.com/Dx724/PatientMonitor/test/demo/alarm_sound_files/sigma_pump_with_neg_pressure.m4a"
         },
         {
           "name": "Patient E",
-          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump.m4a"
+          "streamLink": "https://raw.githubusercontent.com/Dx724/PatientMonitor/test/demo/alarm_sound_files/Sigma_pump.m4a"
         },
         {
           "name": "Patient F",
-          "streamLink": "http://www.columbia.edu/~tz2294/covid/Sigma_pump_extra_recording.m4a"
+          "streamLink": "https://raw.githubusercontent.com/Dx724/PatientMonitor/test/demo/alarm_sound_files/Sigma_pump_extra_recording.m4a"
         }
       ]
     }
